@@ -1,1 +1,695 @@
-<h1>Rifdhy RM</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rifdhy RM — Cybersecurity Professional & Red Teamer</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #04080f;
+  --bg2:     #070d18;
+  --panel:   #09111f;
+  --border:  #0d2035;
+  --border2: #163350;
+  --accent:  #00e5ff;
+  --red:     #ff2d55;
+  --gold:    #f0a500;
+  --purple:  #7c5cfc;
+  --text:    #b2cfe8;
+  --muted:   #3b6177;
+  --white:   #eaf3fc;
+  --mono:    'Share Tech Mono', monospace;
+  --sans:    'Exo 2', sans-serif;
+  --display: 'Syne', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.75;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+#cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--accent); border-radius: 50%;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s;
+  mix-blend-mode: screen;
+}
+
+#cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid rgba(0,229,255,.35); border-radius: 50%;
+  pointer-events: none; z-index: 99998;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s;
+}
+
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0;
+  background-image: linear-gradient(rgba(0,229,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,.025) 1px, transparent 1px);
+  background-size: 50px 50px; pointer-events: none;
+}
+
+.bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; opacity: .12; }
+.bg-glow-1 { background: var(--accent); width: 600px; height: 600px; top: -200px; left: -100px; }
+.bg-glow-2 { background: var(--purple); width: 600px; height: 600px; bottom: -200px; right: -100px; }
+.bg-glow-3 { background: var(--red); width: 300px; height: 300px; top: 40%; left: 30%; opacity: .06; }
+
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,229,255,.008) 2px, rgba(0,229,255,.008) 4px);
+  pointer-events: none; z-index: 9999;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 0 60px; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(4,8,15,.85); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--white); text-decoration: none; }
+.nav-logo em { color: var(--accent); font-style: normal; }
+
+.nav-links { display: flex; list-style: none; gap: 36px; }
+.nav-links a {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
+  color: var(--muted); text-decoration: none; text-transform: uppercase;
+  transition: color .25s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--accent); transition: width .3s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-status { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.status-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: pulse-dot 2s ease infinite; }
+
+@keyframes pulse-dot {
+  0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.4); }
+  50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+}
+
+/* HERO */
+#hero {
+  position: relative; z-index: 1; min-height: 100vh;
+  display: flex; align-items: center; padding: 72px 60px 0;
+}
+
+.hero-inner {
+  width: 100%; max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 340px; gap: 80px; align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 4px;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 20px;
+  opacity: 0; animation: fadeUp .7s .1s ease forwards;
+}
+.hero-eyebrow span { color: var(--muted); }
+
+.hero-name {
+  font-family: var(--display); font-size: clamp(52px, 7vw, 96px);
+  font-weight: 800; line-height: .95; color: var(--white); letter-spacing: -3px;
+  opacity: 0; animation: fadeUp .7s .2s ease forwards;
+}
+.hero-name .line2 { color: transparent; -webkit-text-stroke: 1.5px var(--accent); display: block; }
+
+.hero-title {
+  font-family: var(--mono); font-size: 13px; color: var(--gold); letter-spacing: 2px;
+  margin-top: 20px; margin-bottom: 28px;
+  opacity: 0; animation: fadeUp .7s .3s ease forwards;
+}
+
+.hero-bio {
+  font-size: 15px; color: var(--text); max-width: 540px; line-height: 1.8;
+  opacity: 0; animation: fadeUp .7s .35s ease forwards;
+}
+
+.hero-chips {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px;
+  opacity: 0; animation: fadeUp .7s .4s ease forwards;
+}
+
+.chip {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px;
+  padding: 6px 14px; border: 1px solid var(--border2); color: var(--text);
+  text-transform: uppercase; transition: all .25s;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,.05); }
+.chip.a { border-color: rgba(0,229,255,.3); color: var(--accent); }
+.chip.r { border-color: rgba(255,45,85,.3); color: var(--red); }
+.chip.g { border-color: rgba(34,197,94,.3); color: #22c55e; }
+
+.hero-cta {
+  display: flex; gap: 14px; margin-top: 36px;
+  opacity: 0; animation: fadeUp .7s .45s ease forwards;
+}
+
+.btn-primary {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 14px 32px; background: var(--accent); color: var(--bg);
+  border: none; text-decoration: none; cursor: pointer; font-weight: 600;
+  transition: all .25s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-primary:hover { background: var(--white); transform: translateY(-2px); }
+
+.btn-outline {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 14px 32px; background: transparent; color: var(--text);
+  border: 1px solid var(--border2); text-decoration: none; cursor: pointer;
+  transition: all .25s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+/* Photo card */
+.hero-photo-card { position: relative; opacity: 0; animation: fadeUp .7s .3s ease forwards; }
+
+.photo-frame {
+  position: relative; width: 100%; aspect-ratio: 3/4;
+  background: var(--panel); border: 1px solid var(--border2); overflow: hidden;
+}
+.photo-frame img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top;
+  filter: saturate(.85) contrast(1.05); display: block; transition: transform .5s;
+}
+.photo-frame:hover img { transform: scale(1.03); }
+.photo-frame::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(4,8,15,.8) 100%); z-index: 1;
+}
+
+.photo-corner { position: absolute; width: 20px; height: 20px; z-index: 2; }
+.photo-corner.tl { top: 12px; left: 12px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+.photo-corner.tr { top: 12px; right: 12px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+.photo-corner.bl { bottom: 12px; left: 12px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+.photo-corner.br { bottom: 12px; right: 12px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+
+.photo-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px 16px; z-index: 3; }
+.photo-label-name { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--white); }
+.photo-label-role { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 2px; margin-top: 2px; }
+
+.photo-badge {
+  position: absolute; top: -14px; right: -14px;
+  background: var(--red); font-family: var(--mono); font-size: 9px;
+  letter-spacing: 1px; color: #fff; padding: 8px 14px; z-index: 4;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+
+.hero-stats { display: flex; margin-top: 10px; border: 1px solid var(--border); }
+.hstat { flex: 1; padding: 14px 10px; text-align: center; border-right: 1px solid var(--border); }
+.hstat:last-child { border-right: none; }
+.hstat-num { font-family: var(--display); font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
+.hstat-label { font-family: var(--mono); font-size: 8px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
+
+.scroll-hint {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0; animation: fadeUp .7s .8s ease forwards;
+}
+.scroll-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scroll-anim 1.8s ease infinite;
+}
+@keyframes scroll-anim {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-text { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; writing-mode: vertical-lr; }
+
+/* SECTIONS */
+.section { position: relative; z-index: 1; padding: 110px 60px; max-width: 1200px; margin: 0 auto; }
+.sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+.sec-label::before { content: '// '; color: var(--muted); }
+.sec-title { font-family: var(--display); font-size: clamp(32px,4vw,54px); font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 56px; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+/* EXPERTISE */
+.exp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+.exp-card {
+  background: var(--panel); border: 1px solid var(--border); padding: 32px 28px;
+  position: relative; overflow: hidden; transition: transform .3s, border-color .3s;
+}
+.exp-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: scaleX(0); transform-origin: left; transition: transform .4s;
+}
+.exp-card:hover::before { transform: scaleX(1); }
+.exp-card:hover { transform: translateY(-5px); border-color: var(--border2); }
+.exp-num { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-bottom: 20px; }
+.exp-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+.exp-title { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 12px; line-height: 1.3; }
+.exp-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* SKILLS */
+.skills-wrapper { display: grid; grid-template-columns: repeat(2,1fr); gap: 40px; }
+.sg-title { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.skill-bars { display: flex; flex-direction: column; gap: 12px; }
+.skill-bar-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.skill-name { font-family: var(--mono); font-size: 11px; color: var(--text); letter-spacing: 1px; }
+.skill-pct { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.skill-track { height: 3px; background: var(--border); overflow: hidden; }
+.skill-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--purple)); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(.4,0,.2,1); }
+.skill-fill.red { background: linear-gradient(90deg, var(--red), var(--gold)); }
+.skill-fill.purple { background: linear-gradient(90deg, var(--purple), var(--accent)); }
+.skill-fill.gold { background: linear-gradient(90deg, var(--gold), var(--red)); }
+.skill-fill.visible { transform: scaleX(1); }
+
+.tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.stag {
+  font-family: var(--mono); font-size: 10px; padding: 5px 14px;
+  border: 1px solid var(--border); color: var(--muted); letter-spacing: 1px;
+  transition: all .25s; clip-path: polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
+}
+.stag:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,.04); }
+
+/* EXPERIENCE */
+.tl-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 0 80px; position: relative; }
+.tl-wrapper::before {
+  content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent 80%); transform: translateX(-50%);
+}
+.tl-col-right { padding-top: 60px; }
+.tl-item { position: relative; padding-bottom: 40px; }
+.tl-dot { width: 10px; height: 10px; background: var(--accent); box-shadow: 0 0 12px var(--accent); clip-path: polygon(50% 0%,100% 50%,50% 100%,0% 50%); margin-bottom: 12px; }
+.tl-period { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 2px; margin-bottom: 6px; }
+.tl-role { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 3px; line-height: 1.3; }
+.tl-company { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
+.tl-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* CERTS */
+.cert-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.cert-card {
+  background: var(--panel); border: 1px solid var(--border); padding: 22px;
+  position: relative; overflow: hidden; transition: all .3s;
+  clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+}
+.cert-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.cert-status { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; }
+.cert-status.active { color: #22c55e; }
+.cert-status.progress { color: var(--purple); }
+.cert-name { font-size: 13px; color: var(--white); font-weight: 600; line-height: 1.4; }
+
+/* EDUCATION */
+.edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.edu-card { background: var(--panel); border: 1px solid var(--border); padding: 28px 24px; transition: all .3s; position: relative; overflow: hidden; }
+.edu-card:hover { border-color: var(--purple); transform: translateY(-3px); }
+.edu-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--purple), transparent); }
+.edu-year { font-family: var(--mono); font-size: 10px; color: var(--purple); letter-spacing: 2px; margin-bottom: 10px; }
+.edu-degree { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; line-height: 1.4; }
+.edu-school { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+/* CONTACT */
+.contact-wrapper { max-width: 680px; margin: 0 auto; text-align: center; }
+.contact-sub { font-size: 16px; color: var(--muted); margin-bottom: 52px; line-height: 1.8; }
+.contact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; text-align: left; margin-bottom: 40px; }
+.contact-item { background: var(--panel); border: 1px solid var(--border); padding: 20px 22px; display: flex; align-items: center; gap: 14px; text-decoration: none; transition: all .25s; }
+.contact-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+.ci-icon { font-size: 20px; }
+.ci-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+.ci-value { font-family: var(--mono); font-size: 12px; color: var(--text); }
+.contact-item:hover .ci-value { color: var(--accent); }
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 28px 60px; display: flex; justify-content: space-between; align-items: center;
+}
+.footer-brand { font-family: var(--display); font-size: 14px; font-weight: 700; color: var(--muted); }
+.footer-brand em { color: var(--accent); font-style: normal; }
+.footer-copy { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-family: var(--mono); font-size: 10px; color: var(--muted); text-decoration: none; letter-spacing: 1px; transition: color .2s; }
+.footer-links a:hover { color: var(--accent); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+.reveal-delay-5 { transition-delay: .5s; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+@media (max-width: 1024px) {
+  nav { padding: 0 30px; }
+  .nav-links { display: none; }
+  #hero, .section { padding-left: 30px; padding-right: 30px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-photo-card { max-width: 280px; }
+  .exp-grid { grid-template-columns: repeat(2,1fr); }
+  .tl-wrapper { grid-template-columns: 1fr; }
+  .tl-wrapper::before { display: none; }
+  .tl-col-right { padding-top: 0; }
+  .cert-grid, .edu-grid { grid-template-columns: repeat(2,1fr); }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+}
+@media (max-width: 600px) {
+  .exp-grid, .cert-grid, .edu-grid, .skills-wrapper, .contact-grid { grid-template-columns: 1fr; }
+  #cursor, #cursor-ring { display: none; }
+  body { cursor: auto; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">RIFDHY<em>.RM</em></a>
+  <ul class="nav-links">
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status"><div class="status-dot"></div> Available for engagements</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span>// </span>Colombo, Sri Lanka</div>
+      <h1 class="hero-name">RIFDHY<span class="line2">RM</span></h1>
+      <div class="hero-title">Cybersecurity Professional & Red Teamer · eJPT · CEH · CWAP</div>
+      <p class="hero-bio">Offensive security specialist with a deep passion for penetration testing, red teaming, and adversary simulation. Leading Security Operations at Halexo while hunting flags on HackTheBox as <strong style="color:var(--accent)">Dr. AITH</strong>. Pursuing OSCP & CRTP.</p>
+      <div class="hero-chips">
+        <span class="chip a">⚔️ Red Teamer</span>
+        <span class="chip r">🔴 Pentester</span>
+        <span class="chip g">🚩 HTB: Dr. AITH</span>
+        <span class="chip">🎓 MSc Cyber Security</span>
+        <span class="chip">📍 Colombo, Sri Lanka</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Get In Touch</a>
+        <a href="https://www.linkedin.com/in/rifdhyrm" target="_blank" class="btn-outline">LinkedIn →</a>
+      </div>
+    </div>
+
+    <div class="hero-photo-card">
+      <div class="photo-frame">
+        <img src="https://cdn.theorg.com/4a5422ec-cee2-41d5-b47c-1339d69528e7_thumb.jpg" alt="Rifdhy RM">
+        <div class="photo-corner tl"></div>
+        <div class="photo-corner tr"></div>
+        <div class="photo-corner bl"></div>
+        <div class="photo-corner br"></div>
+        <div class="photo-label">
+          <div class="photo-label-name">Rifdhy RM</div>
+          <div class="photo-label-role">// SECURITY OPERATIONS LEAD</div>
+        </div>
+        <div class="photo-badge">HALEXO · ACTIVE</div>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-num">4+</div><div class="hstat-label">Yrs Pentest</div></div>
+        <div class="hstat"><div class="hstat-num">9</div><div class="hstat-label">Certs</div></div>
+        <div class="hstat"><div class="hstat-num">5+</div><div class="hstat-label">HTB Yrs</div></div>
+        <div class="hstat"><div class="hstat-num">3</div><div class="hstat-label">Degrees</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span class="scroll-text">Scroll</span></div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERTISE -->
+<section id="expertise" class="section">
+  <div class="sec-label">Core Expertise</div>
+  <h2 class="sec-title">What I Do</h2>
+  <div class="exp-grid">
+    <div class="exp-card reveal"><div class="exp-num">01</div><span class="exp-icon">⚔️</span><div class="exp-title">Penetration Testing & Red Teaming</div><div class="exp-desc">Web, Network, Cloud & Infrastructure pentesting. Adversary simulation using Burp Suite, Metasploit, Nmap, and Kali Linux.</div></div>
+    <div class="exp-card reveal reveal-delay-1"><div class="exp-num">02</div><span class="exp-icon">🛡️</span><div class="exp-title">Security Operations & SOC</div><div class="exp-desc">Leading SOC operations, SIEM monitoring, IDS/IPS, incident response, and threat hunting across heterogeneous network environments.</div></div>
+    <div class="exp-card reveal reveal-delay-2"><div class="exp-num">03</div><span class="exp-icon">🔬</span><div class="exp-title">Vulnerability Research</div><div class="exp-desc">Comprehensive security assessments, exploit development, custom scripting, and detailed remediation reporting.</div></div>
+    <div class="exp-card reveal reveal-delay-3"><div class="exp-num">04</div><span class="exp-icon">🧪</span><div class="exp-title">Digital Forensics & Malware Analysis</div><div class="exp-desc">Incident response, forensic investigations, malware triage, and threat hunting to minimize security risk.</div></div>
+    <div class="exp-card reveal reveal-delay-4"><div class="exp-num">05</div><span class="exp-icon">🌐</span><div class="exp-title">Network Security & Infrastructure</div><div class="exp-desc">Secure network design, firewall/VPN configuration, LAN/WAN/VLAN management, and wireless security (CWAP).</div></div>
+    <div class="exp-card reveal reveal-delay-5"><div class="exp-num">06</div><span class="exp-icon">🚩</span><div class="exp-title">CTF & Offensive Research</div><div class="exp-desc">HackTheBox CTF player (Dr. AITH) since 2020 — sharpening offensive skills through real-world attack simulations.</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills" class="section" style="background:var(--bg2);max-width:100%">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="sec-label">Technical Arsenal</div>
+    <h2 class="sec-title">Skills</h2>
+    <div class="skills-wrapper">
+      <div class="reveal">
+        <div class="sg-title">Offensive Security</div>
+        <div class="skill-bars">
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Penetration Testing</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Red Teaming</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Exploit Development</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Social Engineering</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="sg-title">Defensive & SOC</div>
+        <div class="skill-bars">
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">SIEM / IDS / IPS</span><span class="skill-pct">92%</span></div><div class="skill-track"><div class="skill-fill red" style="width:92%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Threat Hunting</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill red" style="width:88%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Incident Response</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill red" style="width:90%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Digital Forensics</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill red" style="width:82%"></div></div></div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="sg-title">Infrastructure</div>
+        <div class="skill-bars">
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Network Security</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill purple" style="width:90%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Firewall / VPN</span><span class="skill-pct">87%</span></div><div class="skill-track"><div class="skill-fill purple" style="width:87%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Wireless (CWAP)</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill purple" style="width:85%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Cloud Security</span><span class="skill-pct">72%</span></div><div class="skill-track"><div class="skill-fill purple" style="width:72%"></div></div></div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-3">
+        <div class="sg-title">Systems & Scripting</div>
+        <div class="skill-bars">
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Linux / Unix</span><span class="skill-pct">94%</span></div><div class="skill-track"><div class="skill-fill gold" style="width:94%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Python / Bash</span><span class="skill-pct">83%</span></div><div class="skill-track"><div class="skill-fill gold" style="width:83%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Windows / AD</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill gold" style="width:85%"></div></div></div>
+          <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Malware Analysis</span><span class="skill-pct">78%</span></div><div class="skill-track"><div class="skill-fill gold" style="width:78%"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tags-row reveal" style="margin-top:48px">
+      <span class="stag">Burp Suite</span><span class="stag">Metasploit</span><span class="stag">Nmap</span>
+      <span class="stag">Kali Linux</span><span class="stag">Wireshark</span><span class="stag">Nexpose</span>
+      <span class="stag">SIEM</span><span class="stag">IDS/IPS</span><span class="stag">Threat Hunting</span>
+      <span class="stag">Python</span><span class="stag">Bash</span><span class="stag">PowerShell</span>
+      <span class="stag">Firewall Config</span><span class="stag">VPN</span><span class="stag">LAN/WAN/VLAN</span>
+      <span class="stag">CTF</span><span class="stag">CWAP</span><span class="stag">Exploit Dev</span>
+      <span class="stag">Social Engineering</span><span class="stag">Digital Forensics</span><span class="stag">Malware Analysis</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+  <div class="sec-label">Career</div>
+  <h2 class="sec-title">Experience</h2>
+  <div class="tl-wrapper">
+    <div class="tl-col-left">
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-period">JAN 2025 — PRESENT</div>
+        <div class="tl-role">Team Lead — Security Operations</div>
+        <div class="tl-company">HALEXO</div>
+        <div class="tl-desc">Leading cybersecurity initiatives — monitoring security events from multiple heterogeneous network devices, managing Nexpose console, implementing alert filtering, and escalating threats.</div>
+      </div>
+      <div class="tl-item reveal reveal-delay-2">
+        <div class="tl-dot"></div>
+        <div class="tl-period">MAY 2023 — JAN 2025</div>
+        <div class="tl-role">Cyber Security Analyst</div>
+        <div class="tl-company">HALEXO · Sri Lanka</div>
+        <div class="tl-desc">Proactive threat detection, vulnerability management, security monitoring, and digital forensics across Unix and Windows environments.</div>
+      </div>
+      <div class="tl-item reveal reveal-delay-4">
+        <div class="tl-dot"></div>
+        <div class="tl-period">OCT 2020 — PRESENT</div>
+        <div class="tl-role">CTF Player — Dr. AITH</div>
+        <div class="tl-company">HACKTHEBOX</div>
+        <div class="tl-desc">Continuously refining offensive security skills through real-world attack simulations, exploit development, and adversary tactics.</div>
+      </div>
+    </div>
+    <div class="tl-col-right">
+      <div class="tl-item reveal reveal-delay-1">
+        <div class="tl-dot"></div>
+        <div class="tl-period">FEB 2026 — PRESENT</div>
+        <div class="tl-role">Cyber Security Consultant</div>
+        <div class="tl-company">HANRARX · Sri Lanka</div>
+        <div class="tl-desc">Strategic security guidance and technical assessments for clients across multiple sectors.</div>
+      </div>
+      <div class="tl-item reveal reveal-delay-3">
+        <div class="tl-dot"></div>
+        <div class="tl-period">MAR 2022 — PRESENT</div>
+        <div class="tl-role">Freelance Penetration Tester</div>
+        <div class="tl-company">UPWORK / INDEPENDENT</div>
+        <div class="tl-desc">Comprehensive security assessments — network, application, and system pentesting. Custom exploit development and detailed remediation reports for global clients.</div>
+      </div>
+      <div class="tl-item reveal reveal-delay-5">
+        <div class="tl-dot"></div>
+        <div class="tl-period">JAN 2022 — DEC 2023</div>
+        <div class="tl-role">Information Technology Engineer</div>
+        <div class="tl-company">AB MAURI LANKA</div>
+        <div class="tl-desc">Designing and managing secure network infrastructure — routers, switches, firewalls, VPNs. Ensuring high availability of enterprise systems.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="section" style="background:var(--bg2);max-width:100%">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="sec-label">Credentials</div>
+    <h2 class="sec-title">Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert-card reveal"><div class="cert-status active">✅ Active</div><div class="cert-name">eJPT — Junior Penetration Tester</div></div>
+      <div class="cert-card reveal reveal-delay-1"><div class="cert-status active">✅ Active</div><div class="cert-name">CEH — Certified Ethical Hacker</div></div>
+      <div class="cert-card reveal reveal-delay-2"><div class="cert-status active">✅ Active</div><div class="cert-name">CWAP — Certified Wireless Analysis Professional</div></div>
+      <div class="cert-card reveal reveal-delay-3"><div class="cert-status active">✅ Active</div><div class="cert-name">Practical Ethical Hacking</div></div>
+      <div class="cert-card reveal reveal-delay-4"><div class="cert-status active">✅ Active</div><div class="cert-name">Practical Web App Security & Testing</div></div>
+      <div class="cert-card reveal reveal-delay-5"><div class="cert-status active">✅ Active</div><div class="cert-name">Google IT Support Professional</div></div>
+      <div class="cert-card reveal"><div class="cert-status active">✅ Active</div><div class="cert-name">IT Security: Defense Against the Digital Dark Arts</div></div>
+      <div class="cert-card reveal reveal-delay-1"><div class="cert-status progress">🔄 Pursuing</div><div class="cert-name">OSCP — Offensive Security Certified Professional</div></div>
+      <div class="cert-card reveal reveal-delay-2"><div class="cert-status progress">🔄 Pursuing</div><div class="cert-name">CRTP — Certified Red Team Professional</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education" class="section">
+  <div class="sec-label">Academic Background</div>
+  <h2 class="sec-title">Education</h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal"><div class="edu-year">2025 – 2027 · IN PROGRESS</div><div class="edu-degree">MSc Cyber Security</div><div class="edu-school">University of Wolverhampton</div></div>
+    <div class="edu-card reveal reveal-delay-1"><div class="edu-year">2022 – 2024 · 2ND UPPER HONORS</div><div class="edu-degree">BSc Network Technology & Cyber Security</div><div class="edu-school">Lincoln University College</div></div>
+    <div class="edu-card reveal reveal-delay-2"><div class="edu-year">2020 – 2022 · COMPLETED</div><div class="edu-degree">HND Cybersecurity</div><div class="edu-school">Qualifi Ltd</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact" class="section" style="background:var(--bg2);max-width:100%">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="contact-wrapper">
+      <div class="sec-label" style="text-align:center">Contact</div>
+      <h2 class="sec-title" style="text-align:center">Let's Connect</h2>
+      <p class="contact-sub">Interested in penetration testing, red team engagements, or cybersecurity consulting? Let's talk.</p>
+      <div class="contact-grid reveal">
+        <a href="mailto:rifdhyrm@gmail.com" class="contact-item"><span class="ci-icon">✉️</span><div><div class="ci-label">Email</div><div class="ci-value">rifdhyrm@gmail.com</div></div></a>
+        <a href="tel:+94761668914" class="contact-item"><span class="ci-icon">📞</span><div><div class="ci-label">Phone</div><div class="ci-value">+94 76 166 8914</div></div></a>
+        <a href="https://www.linkedin.com/in/rifdhyrm" target="_blank" class="contact-item"><span class="ci-icon">💼</span><div><div class="ci-label">LinkedIn</div><div class="ci-value">linkedin.com/in/rifdhyrm</div></div></a>
+        <a href="https://app.hackthebox.com" target="_blank" class="contact-item"><span class="ci-icon">⚡</span><div><div class="ci-label">HackTheBox</div><div class="ci-value">Dr. AITH</div></div></a>
+      </div>
+      <p class="reveal" style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:24px">📍 Colombo, Western Province, Sri Lanka</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">RIFDHY<em>.RM</em></div>
+  <div class="footer-copy">© 2025 Rifdhy RM · All Rights Reserved</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/rifdhyrm" target="_blank">LinkedIn</a>
+    <a href="mailto:rifdhyrm@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+  });
+  (function animRing(){
+    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  })();
+  document.querySelectorAll('a,button,.exp-card,.cert-card,.edu-card,.contact-item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='56px'; ring.style.height='56px'; });
+    el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
+  });
+
+  // Scroll reveal + skill bars
+  const revObserver = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        e.target.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('visible'));
+      }
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>revObserver.observe(el));
+
+  const skillObs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting) document.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('visible'));
+  },{threshold:.1});
+  const skillSec = document.getElementById('skills');
+  if(skillSec) skillObs.observe(skillSec);
+
+  // Typing effect
+  const eyebrow = document.querySelector('.hero-eyebrow');
+  if(eyebrow){
+    const orig=eyebrow.innerHTML; eyebrow.innerHTML=''; let i=0;
+    setTimeout(()=>{
+      const iv=setInterval(()=>{ eyebrow.innerHTML=orig.substring(0,i++); if(i>orig.length) clearInterval(iv); },30);
+    },700);
+  }
+
+  // Active nav
+  const secs=document.querySelectorAll('[id]');
+  const links=document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll',()=>{
+    let cur='';
+    secs.forEach(s=>{ if(window.scrollY>=s.offsetTop-100) cur=s.id; });
+    links.forEach(a=>{ a.style.color=a.getAttribute('href')==='#'+cur?'var(--accent)':''; });
+  },{passive:true});
+</script>
+</body>
+</html>
