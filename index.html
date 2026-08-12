@@ -10,7 +10,8 @@
 <style>
   :root{
     --red:#B61924;
-    --red-soft:rgba(182,25,36,.10);
+    --red-deep:#7A0E17;
+    --red-soft:rgba(182,25,36,.12);
     --ink:#0E0E10;
     --ink-soft:#4A4A50;
     --line:rgba(14,14,16,.10);
@@ -81,7 +82,7 @@
   .hero{
     min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;
     background:
-      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(182,25,36,.18), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(182,25,36,.20), transparent 60%),
       linear-gradient(180deg,#0E0E10 0%, #17161A 100%);
     color:#fff;padding:140px 24px 80px;overflow:hidden;
   }
@@ -109,6 +110,22 @@
     font-size:.85rem;transition:transform .25s, box-shadow .25s;box-shadow:0 10px 30px rgba(182,25,36,.35);
   }
   .btn:hover{transform:translateY(-3px) scale(1.02);}
+  .btn-duo{
+    position:relative;background:linear-gradient(115deg,var(--red) 0%,#3B82F6 50%,var(--red) 100%);
+    background-size:220% 220%;box-shadow:0 10px 30px rgba(182,25,36,.4);
+    animation:duoShift 5s ease infinite, duoPulse 2.8s ease-in-out infinite;isolation:isolate;
+  }
+  .btn-duo::before{
+    content:"";position:absolute;inset:-2px;border-radius:999px;z-index:-1;
+    background:linear-gradient(115deg,var(--red),#3B82F6);filter:blur(10px);opacity:.55;
+    animation:duoShift 5s ease infinite;background-size:220% 220%;
+  }
+  .btn-duo:hover{transform:translateY(-3px) scale(1.04);}
+  @keyframes duoShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+  @keyframes duoPulse{
+    0%,100%{box-shadow:0 10px 28px rgba(182,25,36,.45);}
+    50%{box-shadow:0 10px 36px rgba(59,130,246,.5);}
+  }
   .btn-outline{
     display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--ink);color:var(--ink);
     padding:13px 28px;border-radius:999px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;
@@ -118,6 +135,12 @@
   .hero-btn-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;}
   .btn-outline-dark{border-color:rgba(255,255,255,.35);color:#fff;}
   .btn-outline-dark:hover{background:#fff;color:var(--ink);}
+  .hero-cta-line{
+    font-family:'JetBrains Mono',monospace;font-size:.85rem;letter-spacing:.03em;
+    margin-bottom:16px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  }
+  .hero-cta-line .cta-red{color:var(--red);font-weight:700;}
+  .hero-cta-line .cta-blue{color:#3B82F6;font-weight:700;}
 
   /* ---------- ABOUT ---------- */
   .about{padding:120px 0 90px;background:var(--white);}
@@ -138,10 +161,33 @@
     padding:8px 14px;color:var(--ink);transition:.2s;display:inline-block;
   }
   .tag_list li a:hover{border-color:var(--red);color:var(--red);}
-  .status-note{
-    margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--ink-soft);
-    background:var(--bg-gray);border:1px dashed var(--line);border-radius:10px;padding:10px 14px;display:inline-block;
+  .tag_list li a.pending{
+    opacity:.5;border-style:dashed;color:var(--ink-soft);
   }
+  .tag_list li a.pending:hover{opacity:.85;border-color:var(--red);color:var(--red);}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-card{
+    background:var(--bg-gray);border:1px solid var(--line);border-radius:16px;
+    padding:30px 32px;display:flex;gap:20px;align-items:flex-start;text-align:left;
+  }
+  @media(max-width:520px){.edu-card{flex-direction:column;align-items:center;text-align:center;}}
+  .edu-icon{
+    width:52px;height:52px;border-radius:14px;background:var(--red-soft);color:var(--red);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;
+  }
+  .edu-card h4{font-size:1.12rem;font-weight:700;line-height:1.35;margin-bottom:6px;}
+  .edu-org{color:var(--red);font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;margin-bottom:10px;}
+  .edu-org a{border-bottom:1px solid var(--red);}
+  .edu-meta{
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink-soft);
+    display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px;
+  }
+  @media(max-width:520px){.edu-meta{justify-content:center;}}
+  .edu-meta span{display:flex;align-items:center;gap:6px;}
+  .edu-desc{font-size:.9rem;line-height:1.75;color:var(--ink-soft);margin-bottom:16px;}
+  .edu-highlights{display:flex;flex-wrap:wrap;gap:8px;}
+  @media(max-width:520px){.edu-highlights{justify-content:center;}}
 
   /* ---------- SKILLS ---------- */
   .skills{background:var(--bg-gray);padding:100px 0;}
@@ -149,7 +195,7 @@
   .single_skill{margin-bottom:26px;}
   .single_skill h3{font-size:.92rem;font-weight:600;text-transform:uppercase;letter-spacing:.02em;margin-bottom:10px;font-family:'Inter',sans-serif;}
   .bar-track{height:8px;background:rgba(14,14,16,.08);border-radius:999px;overflow:hidden;}
-  .bar-fill{height:100%;background:linear-gradient(90deg,var(--red),#7A0E17);border-radius:999px;width:0;transition:width 1.4s cubic-bezier(.25,.1,.25,1);}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--red-deep));border-radius:999px;width:0;transition:width 1.4s cubic-bezier(.25,.1,.25,1);}
   .bar-pct{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink-soft);float:right;}
 
   .skill-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;}
@@ -315,6 +361,7 @@
     <div class="navlinks" id="navlinks">
       <a href="#home">Home</a>
       <a href="#about">About</a>
+      <a href="#education">Education</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
       <a href="#blog">Blog</a>
@@ -330,7 +377,7 @@
 <section class="hero" id="home">
   <div id="particles-js"></div>
   <div class="hero-inner">
-    <div class="hero-hello reveal">// whoami</div>
+    <div class="hero-hello reveal">// whoami · <a href="https://github.com/darckshad4w" target="_blank" rel="noopener" style="color:inherit;border-bottom:1px dashed rgba(255,255,255,.35);">@darckshad4w</a></div>
     <h1 class="hero-headline reveal d1">I am <span class="type-wrap"><span id="typedSpan"></span></span></h1>
     <ul class="expert-list reveal d2">
       <li>Cyber Security Engineer</li>
@@ -346,8 +393,13 @@
       <a class="social-btn" href="https://tryhackme.com/p/DarCKShad4W" target="_blank" rel="noopener" title="TryHackMe — DarCKShad4W"><i class="fa-solid fa-flag-checkered"></i></a>
       <a class="social-btn" href="https://wa.me/94761668914" target="_blank" rel="noopener" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
+    <div class="hero-cta-line reveal d4">
+      <span class="cta-red">Need a Pentest?</span> <span class="cta-blue">Need to Secure?</span>
+    </div>
     <div class="hero-btn-row reveal d4">
-      <a href="#contact" class="btn">Need a Pentest? Talk to Rifdhy RM</a>
+      <a href="#contact" class="btn btn-duo">Talk to Rifdhy RM</a>
+    </div>
+    <div class="hero-btn-row reveal d4" style="margin-top:14px;">
       <a href="RESUME_SRC" download class="btn-outline btn-outline-dark"><i class="fa-solid fa-download"></i> Download Resume</a>
     </div>
   </div>
@@ -357,29 +409,54 @@
 <section class="about" id="about">
   <div class="wrap about-grid">
     <div class="reveal">
-      <div class="about-photo"><img src="HEADSHOT_SRC" alt="Rifdhy RM"></div>
+      <div class="about-photo"><img src="https://res.cloudinary.com/wpxj9nk0/image/upload/v1786546874/1726064851669.jpg" alt="Rifdhy RM"></div>
       <h3 class="name">Rifdhy RM</h3>
-      <div class="role">Cyber Security Engineer</div>
+      <div class="role">Cyber Security Professional</div>
     </div>
     <div class="about-bio reveal d1">
       <div class="eyebrow">About</div>
-      <p>I'm Rifdhy RM, a cyber security engineer and penetration tester with <strong>4+ years of experience</strong> across SOC operations, threat detection, and offensive security. I currently lead 24/7 SOC operations at Halexo — triaging 500+ daily alerts across Microsoft Sentinel and Stellar Cyber Open XDR — while running freelance web application and API penetration testing engagements on the side.</p>
-      <p>Off the clock I build home labs across AWS and Azure, practice Active Directory attack paths, and work through CTFs on Hack The Box. Labs, tools, and write-ups live on <a href="https://github.com/darckshad4w/DarCKShad4W" target="_blank" rel="noopener">GitHub</a>. Always up for a new challenge.</p>
-      <p>What started as curiosity about how systems break turned into a career — years in, breaking things (and then explaining how to fix them) is still the part I look forward to most.</p>
+      <p>I'm Rifdhy RM, a Cybersecurity Professional and Penetration Tester with <strong>4+ years of hands-on experience</strong> across SOC operations, threat detection, vulnerability assessment, and offensive security.</p>
+      <p>I currently work as a Cyber Security Team Lead at Halexo, where I help manage 24/7 SOC operations, lead threat detection and incident response activities, and work with platforms such as Microsoft Sentinel and Stellar Cyber Open XDR. Alongside my SOC responsibilities, I conduct freelance web application and API penetration testing, focusing on identifying vulnerabilities and helping organizations strengthen their security posture.</p>
+      <p>Outside of professional work, I continuously build and test security labs across AWS, Azure, Active Directory, and cloud environments. I also practice penetration testing and attack techniques through <a href="https://profile.hackthebox.com/profile/019fec29-3725-708e-b0f8-1facbb00ed59" target="_blank" rel="noopener">Hack The Box</a>, TryHackMe, CTFs, and personal security projects. I use these environments to sharpen my skills in offensive security, detection engineering, vulnerability research, and security automation. Labs, tools, and write-ups live on <a href="https://github.com/darckshad4w/DarCKShad4W" target="_blank" rel="noopener">GitHub</a>.</p>
+      <p>My technical toolkit includes Burp Suite, Nmap, Metasploit, SQLmap, Nuclei, Wireshark, BloodHound, Python, Bash, PowerShell, Microsoft Sentinel, Splunk, Wazuh, AWS, and Azure.</p>
+      <p>What started as curiosity about how systems break has grown into a career in cybersecurity. I enjoy understanding how attacks work, finding weaknesses before real attackers do, and turning those findings into practical security improvements.</p>
+      <p>Always learning. Always testing. Always looking for the next challenge.</p>
       <ul class="tag_list">
-        <li><a target="_blank" href="https://www.credential.net/d47f0b7b-cb87-4dc3-b4ea-498df7fa07aa">OSCP</a></li>
-        <li><a target="_blank" href="https://www.credential.net/c80568be-2b18-4dae-b9b9-ec743fe8e9a5">CRTS</a></li>
-        <li><a target="_blank" href="https://aspen.eccouncil.org/VerifyBadge?type=certification&a=1LYwlgenuppwHx3d9nWh95L/4QUjz8OVxvqphb5dhWQ=">C|PENT</a></li>
-        <li><a target="_blank" href="https://aspen.eccouncil.org/VerifyBadge?type=certification&a=hrh5u5BN7tpBPrNa4iembY0FdEiqRbmviWUXqCxTbfg=">C|EH (Master)</a></li>
         <li><a target="_blank" href="https://aspen.eccouncil.org/VerifyBadge?type=certification&a=Dgy3jUvoy4X60j8c5XvsRKgtLu1zpcLcFnecYVwWLV8=">C|EH</a></li>
         <li><a target="_blank" href="#">INE eJPT</a></li>
+        <li><a target="_blank" href="#">PT1</a></li>
         <li><a target="_blank" href="#">EC-Council CEH</a></li>
         <li><a target="_blank" href="#">Stellar Cyber SOC Analyst</a></li>
         <li><a target="_blank" href="#">CWAP — Web App Pen Tester</a></li>
         <li><a target="_blank" href="#">Security Operations Analyst Associate (SC-200)</a></li>
-        <li><a target="_blank" href="#">TCM Practical Web App Security</a></li>
+        <li><a target="_blank" href="#" class="pending" title="In progress">AZ-500</a></li>
+        <li><a target="_blank" href="#" class="pending" title="In progress">CPTS</a></li>
       </ul>
-      <div class="status-note"><i class="fa-solid fa-hourglass-half"></i> Currently pursuing: <strong>ask me to add what's in progress</strong> — tell me your next certification and I'll pin it here as "In Progress".</div>
+    </div>
+
+    <div class="reveal d2" id="education" style="grid-column:1/-1;margin-top:44px;scroll-margin-top:100px;">
+      <div class="eyebrow">Education</div>
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <h4>Bachelor of Computer Science (Hons) — Network Technology &amp; Cybersecurity</h4>
+          <div class="edu-org"><a href="#" target="_blank" rel="noopener">Lincoln University College</a></div>
+          <div class="edu-meta">
+            <span><i class="fa-solid fa-circle-check"></i> Completed · 2024</span>
+            <span><i class="fa-solid fa-network-wired"></i> Network Technology &amp; Cybersecurity specialization</span>
+          </div>
+          <p class="edu-desc">Honours-level degree pairing core computer science with a specialization in network technology and cybersecurity — covering network architecture &amp; security, offensive/defensive security fundamentals, digital forensics, secure systems design, cryptography, and applied research. Coursework directly supports hands-on SOC operations and penetration testing work in the field.</p>
+          <div class="edu-highlights">
+            <span class="chip">Network Security</span>
+            <span class="chip">Cybersecurity Fundamentals</span>
+            <span class="chip">Digital Forensics</span>
+            <span class="chip">Ethical Hacking</span>
+            <span class="chip">Secure Systems Design</span>
+            <span class="chip">Cryptography</span>
+            <span class="chip">Research Methodology</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -564,6 +641,12 @@
         <p>The prioritization framework I use to move from raw Sentinel/Stellar Cyber alerts to a confirmed incident without drowning in noise.</p>
         <a class="blog_link" href="#" target="_blank">Read Post <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
+      <div class="blog_card reveal d3">
+        <div class="blog_meta"><span class="blog_tag">Threat Hunting</span><span>•</span><span>Coming soon</span></div>
+        <h4>Nightmare Eclipse Drop #9 — Shield Break: A Full Bypass of Microsoft's Patch for Rogue Planet (CVE-2026-50656)</h4>
+        <p>How a threat-hunting pass through anomalous endpoint telemetry led to uncovering a patch-bypass path around a Microsoft security fix — full technical breakdown and detection guidance coming soon.</p>
+        <a class="blog_link" href="#" target="_blank">Read Post <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
     </div>
     <div class="blog_more reveal">
       <a target="_blank" href="#" class="btn-outline">Read All Posts</a>
@@ -590,17 +673,32 @@
         <p>Dumps requestable service-account TGS tickets for offline cracking with hashcat mode 13100.</p>
       </div>
       <div class="note_card reveal d2">
-        <h4><i class="fa-solid fa-magnifying-glass"></i> KQL: Failed Logons</h4>
+        <h4><i class="fa-solid fa-magnifying-glass"></i> KQL: Deep Investigation</h4>
         <pre>SigninLogs
 | where ResultType != "0"
-| summarize count() by UserPrincipalName, bin(TimeGenerated, 1h)</pre>
-        <p>Base query for spotting brute-force or password-spray patterns in Sentinel.</p>
+| join kind=inner (DeviceLogonEvents) on $left.UserPrincipalName == $right.AccountUpn
+| summarize count(), makeset(DeviceName) by UserPrincipalName, bin(TimeGenerated, 1h)</pre>
+        <p>Correlates failed sign-ins with endpoint logon events for a deeper Sentinel investigation, past just spotting brute-force or spray patterns.</p>
       </div>
       <div class="note_card reveal d3">
         <h4><i class="fa-solid fa-cloud"></i> AWS: List Public S3 Buckets</h4>
         <pre>aws s3api list-buckets --query "Buckets[].Name" | \
 xargs -I{} aws s3api get-bucket-acl --bucket {}</pre>
         <p>Quick sweep to flag buckets with public-read ACLs during a cloud recon pass.</p>
+      </div>
+      <div class="note_card reveal">
+        <h4><i class="fa-solid fa-satellite-dish"></i> Stellar Cyber: Entity Investigation</h4>
+        <pre>index=alerts entity.type="host"
+| stats count by entity.value, tactic, technique
+| sort -count</pre>
+        <p>Pivots from a single alert to every tactic and technique tied to that host, for entity-centric investigation in Stellar Cyber Open XDR.</p>
+      </div>
+      <div class="note_card reveal d1">
+        <h4><i class="fa-solid fa-server"></i> Splunk: Lateral Movement Search</h4>
+        <pre>index=wineventlog EventCode=4624 Logon_Type=3
+| stats dc(Destination_Host) as hosts by Account_Name
+| where hosts > 5</pre>
+        <p>Flags accounts authenticating network-logon (type 3) to an unusually high number of distinct hosts — a common lateral-movement tell.</p>
       </div>
     </div>
     <div class="notes_more reveal">
@@ -681,7 +779,7 @@ xargs -I{} aws s3api get-bucket-acl --bucket {}</pre>
       <div class="reveal">
         <div class="info-row">
           <i class="fa-solid fa-location-dot"></i>
-          <div><h4>Location</h4><p>Dehiwala, Sri Lanka — Open to relocation</p></div>
+          <div><h4>Location</h4><p>Colombo, Sri Lanka — Open to relocation</p></div>
         </div>
         <div class="info-row">
           <i class="fa-solid fa-envelope"></i>
@@ -695,8 +793,8 @@ xargs -I{} aws s3api get-bucket-acl --bucket {}</pre>
           <a class="cpill" href="https://www.linkedin.com/in/rifdhyrm/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
           <a class="cpill" href="https://github.com/rifdhyrm" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
           <a class="cpill" href="https://github.com/darckshad4w/DarCKShad4W" target="_blank" rel="noopener"><i class="fa-solid fa-flask"></i> Labs &amp; CTF</a>
-          <a class="cpill" href="https://app.hackthebox.com/profile/550483" target="_blank" rel="noopener"><i class="fa-solid fa-cube"></i> Hack The Box</a>
-          <a class="cpill" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-flag-checkered"></i> TryHackMe</a>
+          <a class="cpill" href="https://profile.hackthebox.com/profile/019fec29-3725-708e-b0f8-1facbb00ed59" target="_blank" rel="noopener"><i class="fa-solid fa-cube"></i> Hack The Box</a>
+          <a class="cpill" href="https://tryhackme.com/p/DarCKShad4W" target="_blank" rel="noopener"><i class="fa-solid fa-flag-checkered"></i> TryHackMe</a>
         </div>
       </div>
       <div class="reveal d1">
@@ -716,12 +814,12 @@ xargs -I{} aws s3api get-bucket-acl --bucket {}</pre>
 
 <footer>
   <div class="footer-brand"><span>R</span>ifdhy <span>RM</span></div>
-  <div class="footer-tag">Security is just an illusion</div>
+  <div class="footer-tag">Red team mindset. Blue team responsibility.</div>
   <div class="footer-social">
     <a href="https://www.linkedin.com/in/rifdhyrm/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
     <a href="https://github.com/rifdhyrm" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
     <a href="https://github.com/darckshad4w/DarCKShad4W" target="_blank" rel="noopener"><i class="fa-solid fa-flask"></i></a>
-    <a href="https://app.hackthebox.com/profile/550483" target="_blank" rel="noopener"><i class="fa-solid fa-cube"></i></a>
+    <a href="https://profile.hackthebox.com/profile/019fec29-3725-708e-b0f8-1facbb00ed59" target="_blank" rel="noopener"><i class="fa-solid fa-cube"></i></a>
     <a href="https://wa.me/94761668914" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
   </div>
   <div class="copyright">© 2026 Rifdhy RM. All rights reserved.</div>
@@ -751,7 +849,7 @@ if (window.particlesJS) {
 }
 
 // typing effect
-const words = ['a Cyber Security Engineer','a Detection & Response Specialist'','a Penetration Tester','Rifdhy RM'];
+const words = ['Rifdhy RM','a Cybersecurity Professional'];
 let wi=0, ci=0, deleting=false;
 const typedEl = document.getElementById('typedSpan');
 function tick(){
