@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rifdhy RM — Cyber Security Engineer &amp; Penetration Tester</title>
+<link rel="canonical" href="https://rifdhyrm.online/">
+<meta name="description" content="Rifdhy RM — Cyber Security Engineer, Penetration Tester and SOC Team Lead. Portfolio of labs, write-ups, and security research.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rifdhyrm.online/">
+<meta property="og:title" content="Rifdhy RM — Cyber Security Engineer & Penetration Tester">
+<meta property="og:description" content="Portfolio of labs, write-ups, and security research from Rifdhy RM — SOC Team Lead and Penetration Tester.">
+<meta property="og:image" content="https://res.cloudinary.com/wpxj9nk0/image/upload/v1786546874/1726064851669.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/wpxj9nk0/image/upload/v1787033661/84532802.jpg">
 <link rel="apple-touch-icon" href="https://res.cloudinary.com/wpxj9nk0/image/upload/v1787033661/84532802.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -267,11 +275,31 @@
   .note_card p{font-size:.82rem;line-height:1.55;color:var(--ink-soft);}
   .notes_more{text-align:center;margin-top:40px;}
 
+  /* ---------- RECOMMENDATIONS ---------- */
+  .recs{padding:100px 0;background:var(--bg-gray);}
+  .recs_grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+  .rec_card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 26px;
+    display:flex;flex-direction:column;transition:transform .25s, box-shadow .25s;
+  }
+  .rec_card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -20px rgba(0,0,0,.2);}
+  .rec_quote_icon{color:var(--red);font-size:1.3rem;opacity:.35;margin-bottom:10px;}
+  .rec_text{font-size:.9rem;line-height:1.7;color:var(--ink-soft);flex-grow:1;margin-bottom:20px;}
+  .rec_person{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line);}
+  .rec_avatar{
+    width:44px;height:44px;border-radius:50%;background:var(--red-soft);color:var(--red);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Rajdhani',sans-serif;
+    font-size:1rem;flex-shrink:0;
+  }
+  .rec_person h5{font-size:.9rem;font-weight:700;line-height:1.3;}
+  .rec_person span{font-size:.72rem;color:var(--ink-soft);line-height:1.4;display:block;margin-top:2px;}
+  .recs_more{text-align:center;margin-top:48px;}
+
   /* ---------- PROOF ---------- */
-  .proof{padding:100px 0;background:var(--bg-gray);}
+  .proof{padding:100px 0;background:#fff;}
   .proof-top-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;margin-bottom:22px;}
   @media(max-width:840px){.proof-top-grid{grid-template-columns:1fr;}}
-  .proof-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 28px;}
+  .proof-card{background:var(--bg-gray);border:1px solid var(--line);border-radius:16px;padding:26px 28px;}
   .proof-card h4{
     font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:8px;
@@ -281,19 +309,19 @@
   .gh-chart-note{margin-top:12px;font-size:.76rem;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
 
   .htb-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .htb-stat{background:var(--bg-gray);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:center;}
+  .htb-stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:center;}
   .htb-stat .num{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.6rem;color:var(--red);line-height:1;}
   .htb-stat .lbl{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px;}
   .htb-rank-badge{
     display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-family:'JetBrains Mono',monospace;
     font-size:.74rem;color:var(--ink-soft);
   }
-  .htb-update-note{margin-top:12px;font-size:.72rem;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;background:var(--bg-gray);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;}
+  .htb-update-note{margin-top:12px;font-size:.72rem;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;background:#fff;border:1px dashed var(--line);border-radius:8px;padding:8px 12px;}
 
   .downloads-row{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
   @media(max-width:640px){.downloads-row{grid-template-columns:1fr;}}
   .download-card{
-    background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 28px;
+    background:var(--bg-gray);border:1px solid var(--line);border-radius:16px;padding:26px 28px;
     display:flex;align-items:center;gap:18px;transition:.25s;
   }
   .download-card:hover{border-color:var(--red);transform:translateY(-4px);}
@@ -342,7 +370,11 @@
   }
   input::placeholder,textarea::placeholder{color:rgba(255,255,255,.4);}
   textarea{min-height:120px;resize:vertical;}
-  .btn-submit{align-self:flex-start;}
+  .btn-submit{align-self:flex-start;border:none;cursor:pointer;font-family:inherit;}
+  .btn-submit:disabled{opacity:.6;cursor:not-allowed;}
+  .form_status{font-size:.82rem;font-family:'JetBrains Mono',monospace;margin-top:4px;min-height:1.2em;}
+  .form_status.ok{color:#6bd18a;}
+  .form_status.err{color:#ff8a8a;}
 
   /* ---------- FOOTER ---------- */
   footer{background:#0A0A0B;color:rgba(255,255,255,.55);text-align:center;padding:44px 20px 28px;}
@@ -368,6 +400,7 @@
       <a href="#projects">Projects</a>
       <a href="#blog">Blog</a>
       <a href="#notes">Notes</a>
+      <a href="#recommendations">Recommendations</a>
       <a href="#proof">Proof</a>
       <a href="#contact" class="cta">Contact</a>
     </div>
@@ -709,6 +742,54 @@ xargs -I{} aws s3api get-bucket-acl --bucket {}</pre>
   </div>
 </section>
 
+<!-- ============ RECOMMENDATIONS ============ -->
+<section class="recs" id="recommendations">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Endorsements</div>
+      <h2 class="section-title">LinkedIn <span>Recommendations</span></h2>
+    </div>
+    <div class="recs_grid">
+      <div class="rec_card reveal">
+        <div class="rec_quote_icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="rec_text">I've had the pleasure of working with Rifdhy as part of the SOC team. He is skilled, reliable, and always proactive in identifying and solving security issues. His teamwork, clear communication, and strong technical knowledge make him a valuable asset to any organization. I truly recommend Rifdhy for any cybersecurity role.</p>
+        <div class="rec_person">
+          <div class="rec_avatar">RJ</div>
+          <div>
+            <h5>Robert Julius Jenes</h5>
+            <span>CISSP · MSc · B.Eng — managed Rifdhy directly</span>
+          </div>
+        </div>
+      </div>
+      <div class="rec_card reveal d1">
+        <div class="rec_quote_icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="rec_text">I've had the pleasure of working alongside Rifdhy, whose expertise in cybersecurity is truly exceptional. His deep knowledge of penetration testing and threat detection, paired with a proactive and hands-on approach, makes him an invaluable asset to any team. Rifdhy consistently demonstrates a remarkable ability to analyze security events, identify vulnerabilities, and implement robust defenses, significantly enhancing organizational security postures.</p>
+        <div class="rec_person">
+          <div class="rec_avatar">NW</div>
+          <div>
+            <h5>Naveen Wimalaweera</h5>
+            <span>Senior Security Engineer · MSc. Cyber Security — worked with Rifdhy on the same team</span>
+          </div>
+        </div>
+      </div>
+      <div class="rec_card reveal d2">
+        <div class="rec_quote_icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="rec_text">Working with Rifdhy was genuinely uplifting — his resourcefulness and proactive mindset turned challenges into remarkable achievements. His keen insight and unwavering commitment consistently propelled our projects forward. I highly recommend Rifdhy as a dynamic and dependable professional.</p>
+        <div class="rec_person">
+          <div class="rec_avatar">AI</div>
+          <div>
+            <h5>Afham Iqbal</h5>
+            <span>Cyber Security Professional · TCM PEH — worked with Rifdhy on the same team</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recs_more reveal">
+      <a target="_blank" href="https://www.linkedin.com/in/rifdhyrm/details/recommendations/" class="btn-outline">See All on LinkedIn</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PROOF OF WORK ============ -->
 <section class="proof" id="proof">
   <div class="wrap">
@@ -807,7 +888,12 @@ xargs -I{} aws s3api get-bucket-acl --bucket {}</pre>
           </div>
           <input id="form_subject" name="subject" placeholder="Subject" type="text">
           <textarea id="form_message" name="message" placeholder="Message" required></textarea>
-          <button type="submit" class="btn btn-submit">Send <i class="fa-solid fa-paper-plane"></i></button>
+          <!-- Web3Forms access key — replace YOUR_ACCESS_KEY_HERE with your real key from web3forms.com -->
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" value="New message from rifdhyrm.online portfolio">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+          <button type="submit" class="btn btn-submit" id="form_submit_btn">Send <i class="fa-solid fa-paper-plane"></i></button>
+          <div class="form_status" id="form_status"></div>
         </form>
       </div>
     </div>
@@ -934,15 +1020,55 @@ const termObs = new IntersectionObserver((entries)=>{
 },{threshold:.3});
 if(termBody) termObs.observe(termBody);
 
-// contact form -> mailto fallback (no backend configured)
-document.getElementById('contact_form').addEventListener('submit', function(e){
+// contact form -> submits to Web3Forms (free service, no backend needed)
+// so messages actually land in your inbox instead of relying on the
+// visitor's device having a configured email client.
+document.getElementById('contact_form').addEventListener('submit', async function(e){
   e.preventDefault();
-  const name = document.getElementById('form_name').value;
-  const email = document.getElementById('form_email').value;
-  const subject = document.getElementById('form_subject').value || 'Portfolio contact';
-  const message = document.getElementById('form_message').value;
-  const body = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
-  window.location.href = `mailto:rifdhyrm@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+  const form = e.target;
+  const btn = document.getElementById('form_submit_btn');
+  const status = document.getElementById('form_status');
+  const accessKey = form.access_key.value;
+
+  if(!accessKey || accessKey === 'YOUR_ACCESS_KEY_HERE'){
+    // Fallback: no Web3Forms key configured yet, use mailto so nothing is lost
+    const name = form.name.value;
+    const email = form.email.value;
+    const subject = document.getElementById('form_subject').value || 'Portfolio contact';
+    const message = document.getElementById('form_message').value;
+    const body = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
+    window.location.href = `mailto:rifdhyrm@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    status.textContent = 'Form not fully set up yet — opening your email app as a fallback.';
+    status.className = 'form_status err';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  status.textContent = '';
+  status.className = 'form_status';
+
+  try{
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(form)))
+    });
+    const data = await res.json();
+    if(data.success){
+      status.textContent = 'Message sent — thanks, I\'ll get back to you soon.';
+      status.className = 'form_status ok';
+      form.reset();
+    } else {
+      throw new Error(data.message || 'Submission failed');
+    }
+  } catch(err){
+    status.textContent = 'Something went wrong sending that. Please email rifdhyrm@gmail.com directly.';
+    status.className = 'form_status err';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Send <i class="fa-solid fa-paper-plane"></i>';
+  }
 });
 </script>
 </body>
